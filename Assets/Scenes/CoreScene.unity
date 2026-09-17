@@ -164,7 +164,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 49c8066803dfbed44bcf03d787474662, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::WeaponAim
-  cam: {fileID: 0}
+  cam: {fileID: 519420031}
   spriteRenderer: {fileID: 0}
 --- !u!1 &519420028
 GameObject:
@@ -585,8 +585,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 6a93edb65c57c78428a1191ff871a52d, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::PlayerRecoilJump
-  rb: {fileID: 0}
-  weaponAim: {fileID: 0}
+  rb: {fileID: 867041665}
+  weaponAim: {fileID: 48325599}
   jumpForce: 10
   downwardJumpSpeedMultiplier: 0.5
   downwardFallGravityMultiplier: 0.4
