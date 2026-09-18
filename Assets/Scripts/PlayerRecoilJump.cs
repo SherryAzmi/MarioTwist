@@ -20,6 +20,7 @@ public class PlayerRecoilJump : MonoBehaviour
 
     private float defaultGravityScale;
     private bool slowFalling;
+    private bool isGrounded;
 
     private void Awake()
     {
@@ -34,23 +35,31 @@ public class PlayerRecoilJump : MonoBehaviour
     {
         if (Mouse.current == null || weaponAim == null) return;
 
-        if (Mouse.current.leftButton.wasPressedThisFrame)
-        {
-            PerformJump(jumpForce, slowGunColor);
-        }
-        else if (Mouse.current.rightButton.wasPressedThisFrame)
-        {
-            PerformJump(fastJumpForce, fastGunColor);
-        }
-    }
-
-    private void PerformJump(float force, Color gunColor)
-    {
-        if (audioSource != null && jumpClip != null) audioSource.PlayOneShot(jumpClip);
-        if (weaponAim.SpriteRenderer != null) weaponAim.SpriteRenderer.color = gunColor;
+        bool leftClicked = Mouse.current.leftButton.wasPressedThisFrame;
+        bool rightClicked = Mouse.current.rightButton.wasPressedThisFrame;
+        if (!leftClicked && !rightClicked) return;
 
         Vector2 jumpDirection = -weaponAim.AimDirection;
         bool aimingUp = jumpDirection.y < -0.1f;
+
+        // Aiming up launches downward. If already grounded, that would just push
+        // into the floor with no actual movement, so skip the jump entirely.
+        if (aimingUp && isGrounded) return;
+
+        if (leftClicked)
+        {
+            PerformJump(jumpForce, slowGunColor, jumpDirection, aimingUp);
+        }
+        else
+        {
+            PerformJump(fastJumpForce, fastGunColor, jumpDirection, aimingUp);
+        }
+    }
+
+    private void PerformJump(float force, Color gunColor, Vector2 jumpDirection, bool aimingUp)
+    {
+        if (audioSource != null && jumpClip != null) audioSource.PlayOneShot(jumpClip);
+        if (weaponAim.SpriteRenderer != null) weaponAim.SpriteRenderer.color = gunColor;
 
         if (aimingUp)
         {
@@ -64,10 +73,14 @@ public class PlayerRecoilJump : MonoBehaviour
             rb.gravityScale = defaultGravityScale;
             slowFalling = false;
         }
+
+        isGrounded = false;
     }
 
     private void OnCollisionEnter2D(Collision2D collision)
     {
+        isGrounded = true;
+
         float fallSpeed = Mathf.Abs(collision.relativeVelocity.y);
         if (!slowFalling && fallSpeed > fallDamageSpeedThreshold && playerHealth != null)
         {
@@ -79,5 +92,10 @@ public class PlayerRecoilJump : MonoBehaviour
             rb.gravityScale = defaultGravityScale;
             slowFalling = false;
         }
+    }
+
+    private void OnCollisionExit2D(Collision2D collision)
+    {
+        isGrounded = false;
     }
 }
