@@ -17,17 +17,15 @@ public class PlayerRecoilJump : MonoBehaviour
     [SerializeField] private float slowGunSpeedMultiplier = 0.5f;
     [SerializeField] private float slowGunGravityMultiplier = 0.4f;
     [SerializeField] private float redFireRate = 0.2f;
-    [SerializeField] private float fallDamageHeightThreshold = 3f;
-    [SerializeField] private int fallDamage = 5;
     [SerializeField] private AudioSource audioSource;
     [SerializeField] private AudioClip jumpClip;
     [SerializeField] private AudioClip fastJumpClip;
 
     private float defaultGravityScale;
-    private bool slowFalling;
     private bool isGrounded;
     private float lastRedFireTime = -999f;
-    private float peakHeight;
+
+    public bool IsGrounded => isGrounded;
 
     private void Awake()
     {
@@ -37,13 +35,10 @@ public class PlayerRecoilJump : MonoBehaviour
         if (playerHealth == null) playerHealth = GetComponent<PlayerHealth>();
         if (audioSource == null) audioSource = GetComponent<AudioSource>();
         defaultGravityScale = rb.gravityScale;
-        peakHeight = transform.position.y;
     }
 
     private void Update()
     {
-        if (!isGrounded) peakHeight = Mathf.Max(peakHeight, transform.position.y);
-
         if (Mouse.current == null || weaponAim == null) return;
 
         bool leftHeld = Mouse.current.leftButton.isPressed;
@@ -63,18 +58,15 @@ public class PlayerRecoilJump : MonoBehaviour
         {
             lastRedFireTime = Time.time;
             float slowGravity = defaultGravityScale * slowGunGravityMultiplier;
-            // Fall-damage immunity only counts if red was used specifically to cushion
-            // the descent (aiming up); the speed/gravity reduction itself still applies
-            // to red in every direction.
-            PerformJump(jumpForce * slowGunSpeedMultiplier, slowGunSprite, slowGunParticleColor, jumpDirection, jumpClip, slowGravity, isSlow: aimingUp);
+            PerformJump(jumpForce * slowGunSpeedMultiplier, slowGunSprite, slowGunParticleColor, jumpDirection, jumpClip, slowGravity);
         }
         else
         {
-            PerformJump(fastJumpForce, fastGunSprite, fastGunParticleColor, jumpDirection, fastJumpClip, defaultGravityScale, isSlow: false);
+            PerformJump(fastJumpForce, fastGunSprite, fastGunParticleColor, jumpDirection, fastJumpClip, defaultGravityScale);
         }
     }
 
-    private void PerformJump(float force, Sprite gunSprite, Color particleColor, Vector2 jumpDirection, AudioClip clip, float gravityScale, bool isSlow)
+    private void PerformJump(float force, Sprite gunSprite, Color particleColor, Vector2 jumpDirection, AudioClip clip, float gravityScale)
     {
         if (audioSource != null && clip != null) audioSource.PlayOneShot(clip);
         if (weaponAim.SpriteRenderer != null && gunSprite != null) weaponAim.SpriteRenderer.sprite = gunSprite;
@@ -88,36 +80,18 @@ public class PlayerRecoilJump : MonoBehaviour
 
         rb.linearVelocity = jumpDirection * force;
         rb.gravityScale = gravityScale;
-        slowFalling = isSlow;
 
         isGrounded = false;
-        peakHeight = transform.position.y;
     }
 
     private void OnCollisionEnter2D(Collision2D collision)
     {
         isGrounded = true;
-
-        // How far below the highest point reached since last airborne we've now landed.
-        // A small drop near the ground never hurts; only a big fall from far away does,
-        // and only if the red (slow) gun wasn't used to cushion it.
-        float fallDistance = peakHeight - transform.position.y;
-        if (!slowFalling && fallDistance > fallDamageHeightThreshold && playerHealth != null)
-        {
-            playerHealth.TakeDamage(fallDamage);
-        }
-
-        // Always restore normal gravity on landing, even if the reduced gravity from
-        // a red shot in a non-up direction was still active mid-air.
         rb.gravityScale = defaultGravityScale;
-        slowFalling = false;
-
-        peakHeight = transform.position.y;
     }
 
     private void OnCollisionExit2D(Collision2D collision)
     {
         isGrounded = false;
-        peakHeight = transform.position.y;
     }
 }
