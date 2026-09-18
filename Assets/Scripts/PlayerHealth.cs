@@ -16,6 +16,7 @@ public class PlayerHealth : MonoBehaviour
     public int MaxLives => maxLives;
     public int CurrentLives { get; private set; }
     public bool IsGameOver { get; private set; }
+    public bool IsInvulnerable { get; private set; }
 
     public event System.Action<int, int> HealthChanged;
     public event System.Action<int, int> LivesChanged;
@@ -35,9 +36,14 @@ public class PlayerHealth : MonoBehaviour
         TakeDamage(CurrentHealth);
     }
 
+    public void SetInvulnerable(bool invulnerable)
+    {
+        IsInvulnerable = invulnerable;
+    }
+
     public void TakeDamage(int amount)
     {
-        if (IsGameOver) return;
+        if (IsGameOver || IsInvulnerable) return;
 
         CurrentHealth = Mathf.Max(0, CurrentHealth - amount);
         HealthChanged?.Invoke(CurrentHealth, maxHealth);
@@ -50,7 +56,7 @@ public class PlayerHealth : MonoBehaviour
 
     public void LoseHeart()
     {
-        if (IsGameOver) return;
+        if (IsGameOver || IsInvulnerable) return;
 
         CurrentLives = Mathf.Max(0, CurrentLives - 1);
         LivesChanged?.Invoke(CurrentLives, maxLives);

@@ -26,7 +26,7 @@ public class GroundHazard : MonoBehaviour
 
     private void Update()
     {
-        if (recoilJump == null || playerHealth == null || playerHealth.IsGameOver || !recoilJump.IsGrounded)
+        if (recoilJump == null || playerHealth == null || playerHealth.IsGameOver || playerHealth.IsInvulnerable || !recoilJump.IsGrounded)
         {
             tickTimer = 0f;
             if (hazardAudioSource != null && hazardAudioSource.isPlaying) hazardAudioSource.Stop();
