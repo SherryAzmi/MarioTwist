@@ -1,11 +1,15 @@
 using UnityEngine;
 using UnityEngine.InputSystem;
+using UnityEngine.UI;
 
 public class GameManager : MonoBehaviour
 {
     [SerializeField] private GameObject winPanel;
     [SerializeField] private GameObject losePanel;
     [SerializeField] private GameObject pausePanel;
+    [SerializeField] private GameObject settingsPanel;
+    [SerializeField] private Slider musicSlider;
+    [SerializeField] private Slider sfxSlider;
     [SerializeField] private PlayerHealth playerHealth;
 
     private bool isGameOver;
@@ -31,6 +35,7 @@ public class GameManager : MonoBehaviour
         if (winPanel) winPanel.SetActive(false);
         if (losePanel) losePanel.SetActive(false);
         if (pausePanel) pausePanel.SetActive(false);
+        if (settingsPanel) settingsPanel.SetActive(false);
         isGameOver = false;
         isPaused = false;
         Time.timeScale = 1f;
@@ -73,6 +78,30 @@ public class GameManager : MonoBehaviour
         isPaused = false;
         if (pausePanel) pausePanel.SetActive(false);
         Time.timeScale = 1f;
+    }
+
+    public void OpenSettings()
+    {
+        if (pausePanel) pausePanel.SetActive(false);
+        if (settingsPanel) settingsPanel.SetActive(true);
+        if (musicSlider) musicSlider.SetValueWithoutNotify(AudioManager.MusicVolume);
+        if (sfxSlider) sfxSlider.SetValueWithoutNotify(AudioManager.SFXVolume);
+    }
+
+    public void CloseSettings()
+    {
+        if (settingsPanel) settingsPanel.SetActive(false);
+        if (pausePanel) pausePanel.SetActive(true);
+    }
+
+    public void SetMusicVolume(float volume)
+    {
+        AudioManager.SetMusicVolume(volume);
+    }
+
+    public void SetSFXVolume(float volume)
+    {
+        AudioManager.SetSFXVolume(volume);
     }
 
     public void RestartLevel()

@@ -33,9 +33,10 @@ public class GroundHazard : MonoBehaviour
             return;
         }
 
-        if (hazardAudioSource != null && hazardLoopClip != null && !hazardAudioSource.isPlaying)
+        if (hazardAudioSource != null && hazardLoopClip != null)
         {
-            hazardAudioSource.Play();
+            hazardAudioSource.volume = AudioManager.SFXVolume;
+            if (!hazardAudioSource.isPlaying) hazardAudioSource.Play();
         }
 
         tickTimer += Time.deltaTime;

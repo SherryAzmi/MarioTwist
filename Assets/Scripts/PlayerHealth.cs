@@ -42,7 +42,7 @@ public class PlayerHealth : MonoBehaviour
         CurrentHealth = Mathf.Max(0, CurrentHealth - amount);
         HealthChanged?.Invoke(CurrentHealth, maxHealth);
 
-        if (damageClip != null) audioSource.PlayOneShot(damageClip);
+        if (damageClip != null) audioSource.PlayOneShot(damageClip, AudioManager.SFXVolume);
         if (cameraShake != null) cameraShake.Shake();
 
         if (CurrentHealth <= 0) TriggerGameOver();
@@ -55,7 +55,7 @@ public class PlayerHealth : MonoBehaviour
         CurrentLives = Mathf.Max(0, CurrentLives - 1);
         LivesChanged?.Invoke(CurrentLives, maxLives);
 
-        if (damageClip != null) audioSource.PlayOneShot(damageClip);
+        if (damageClip != null) audioSource.PlayOneShot(damageClip, AudioManager.SFXVolume);
         if (cameraShake != null) cameraShake.Shake();
 
         if (CurrentLives <= 0)
@@ -80,7 +80,7 @@ public class PlayerHealth : MonoBehaviour
             if (src != audioSource) src.Stop();
         }
 
-        if (gameOverClip != null) audioSource.PlayOneShot(gameOverClip);
+        if (gameOverClip != null) audioSource.PlayOneShot(gameOverClip, AudioManager.SFXVolume);
         GameOver?.Invoke();
 
         var recoilJump = GetComponent<PlayerRecoilJump>();

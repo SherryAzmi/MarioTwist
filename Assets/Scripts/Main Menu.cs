@@ -2,6 +2,7 @@ using UnityEngine;
 using UnityEngine.UI;
 using UnityEngine.SceneManagement;
 using UnityEngine.Audio;
+using UnityEngine.InputSystem;
 public class MainMenu : MonoBehaviour
 {
     // Start is called once before the first execution of Update after the MonoBehaviour is created
@@ -39,7 +40,7 @@ public class MainMenu : MonoBehaviour
     {
         //load scene
 
-        SceneManager.LoadScene("GameScene"); // will be changed to the actual game scene
+        SceneManager.LoadScene("CoreScene");
 
         if (mainMenuPanel) mainMenuPanel.SetActive(false);
         if (settingsPanel) settingsPanel.SetActive(false);
@@ -71,56 +72,59 @@ public class MainMenu : MonoBehaviour
     //2- Settings Panel
     public void OpenSettings()
     {
-        pausedForSettings = pausePanel.activeSelf;
+        pausedForSettings = pausePanel != null && pausePanel.activeSelf;
 
-        mainMenuPanel.SetActive(false);
-        pausePanel.SetActive(false);
+        if (mainMenuPanel) mainMenuPanel.SetActive(false);
+        if (pausePanel) pausePanel.SetActive(false);
 
-        settingsPanel.SetActive(true);
+        if (settingsPanel) settingsPanel.SetActive(true);
+
+        if (musicSlider) musicSlider.SetValueWithoutNotify(AudioManager.MusicVolume);
+        if (sfxSlider) sfxSlider.SetValueWithoutNotify(AudioManager.SFXVolume);
     }
     public void CloseSettings()
     {
-        settingsPanel.SetActive(false);
+        if (settingsPanel) settingsPanel.SetActive(false);
         if (pausedForSettings)
         {
-            pausePanel.SetActive(true);
+            if (pausePanel) pausePanel.SetActive(true);
         }
         else
         {
-            mainMenuPanel.SetActive(true);
+            if (mainMenuPanel) mainMenuPanel.SetActive(true);
         }
     }
     //3- Instructions Panel
     public void OpenInstructions()
     {
-        mainMenuPanel.SetActive(false);
-        instructionsPanel.SetActive(true);
+        if (mainMenuPanel) mainMenuPanel.SetActive(false);
+        if (instructionsPanel) instructionsPanel.SetActive(true);
 
     }
     //4- Credits Panel
     public void OpenCredits()
     {
-        mainMenuPanel.SetActive(false);
-        creditsPanel.SetActive(true);
+        if (mainMenuPanel) mainMenuPanel.SetActive(false);
+        if (creditsPanel) creditsPanel.SetActive(true);
     }
     public void BackToMainMenu()
     {
-        creditsPanel.SetActive(false);
-        instructionsPanel.SetActive(false);
-        settingsPanel.SetActive(false);
+        if (creditsPanel) creditsPanel.SetActive(false);
+        if (instructionsPanel) instructionsPanel.SetActive(false);
+        if (settingsPanel) settingsPanel.SetActive(false);
 
-        mainMenuPanel.SetActive(true);
+        if (mainMenuPanel) mainMenuPanel.SetActive(true);
     }
     //5- pause panel
     public void OpenPausePanel()
     {
         if (!isGameStarted || isGameOver) return;
-        pausePanel.SetActive(true);
+        if (pausePanel) pausePanel.SetActive(true);
         Time.timeScale = 0f;
     }
     public void ClosePausePanel()
     {
-        pausePanel.SetActive(false);
+        if (pausePanel) pausePanel.SetActive(false);
         Time.timeScale = 1f;
     }
 
@@ -128,9 +132,9 @@ public class MainMenu : MonoBehaviour
     public void ShowWinPanel()
     {
         isGameOver = true;
-        pausePanel.SetActive(false);
-        losePanel.SetActive(false);
-        winPanel.SetActive(true);
+        if (pausePanel) pausePanel.SetActive(false);
+        if (losePanel) losePanel.SetActive(false);
+        if (winPanel) winPanel.SetActive(true);
         Time.timeScale = 0f;
     }
 
@@ -138,22 +142,22 @@ public class MainMenu : MonoBehaviour
     public void ShowLosePanel()
     {
         isGameOver = true;
-        losePanel.SetActive(true);
-        pausePanel.SetActive(false);
-        winPanel.SetActive(false);
+        if (losePanel) losePanel.SetActive(true);
+        if (pausePanel) pausePanel.SetActive(false);
+        if (winPanel) winPanel.SetActive(false);
         Time.timeScale = 0f;
     }
 
     // Update is called once per frame
     void Update()
     {
-        if (Input.GetKeyDown(KeyCode.Escape) && isGameStarted && !isGameOver)
+        if (Keyboard.current != null && Keyboard.current.escapeKey.wasPressedThisFrame && isGameStarted && !isGameOver)
         {
-            if (settingsPanel.activeSelf && pausedForSettings)
+            if (settingsPanel && settingsPanel.activeSelf && pausedForSettings)
             {
                 CloseSettings();
             }
-            else if (pausePanel.activeSelf)
+            else if (pausePanel && pausePanel.activeSelf)
             {
                 ClosePausePanel();
             }
@@ -176,13 +180,11 @@ public class MainMenu : MonoBehaviour
     }
     public void SetMusicVolume(float volume)
     {
-        // Set the music volume in your audio manager or audio source
-
+        AudioManager.SetMusicVolume(volume);
     }
     public void SetSFXVolume(float volume)
     {
-        // Set the SFX volume in your audio manager or audio source
-
+        AudioManager.SetSFXVolume(volume);
     }
 
 }

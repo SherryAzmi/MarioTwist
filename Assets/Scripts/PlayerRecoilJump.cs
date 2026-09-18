@@ -105,7 +105,7 @@ public class PlayerRecoilJump : MonoBehaviour
 
     private void PerformJump(float force, Sprite gunSprite, Color particleColor, Vector2 jumpDirection, AudioClip clip, float gravityScale)
     {
-        if (audioSource != null && clip != null) audioSource.PlayOneShot(clip);
+        if (audioSource != null && clip != null) audioSource.PlayOneShot(clip, AudioManager.SFXVolume);
         if (weaponAim.SpriteRenderer != null && gunSprite != null) weaponAim.SpriteRenderer.sprite = gunSprite;
 
         if (gunParticles != null)
