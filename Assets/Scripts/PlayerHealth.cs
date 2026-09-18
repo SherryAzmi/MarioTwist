@@ -23,6 +23,11 @@ public class PlayerHealth : MonoBehaviour
         if (cameraShake == null) cameraShake = GetComponentInChildren<CameraShake>();
     }
 
+    public void Kill()
+    {
+        TakeDamage(CurrentHealth);
+    }
+
     public void TakeDamage(int amount)
     {
         if (IsGameOver) return;
