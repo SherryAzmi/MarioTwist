@@ -59,7 +59,10 @@ public class PlayerRecoilJump : MonoBehaviour
         {
             lastRedFireTime = Time.time;
             float slowGravity = defaultGravityScale * slowGunGravityMultiplier;
-            PerformJump(jumpForce * slowGunSpeedMultiplier, slowGunColor, jumpDirection, jumpClip, slowGravity, isSlow: true);
+            // Fall-damage immunity only counts if red was used specifically to cushion
+            // the descent (aiming up); the speed/gravity reduction itself still applies
+            // to red in every direction.
+            PerformJump(jumpForce * slowGunSpeedMultiplier, slowGunColor, jumpDirection, jumpClip, slowGravity, isSlow: aimingUp);
         }
         else
         {
@@ -93,11 +96,10 @@ public class PlayerRecoilJump : MonoBehaviour
             playerHealth.TakeDamage(fallDamage);
         }
 
-        if (slowFalling)
-        {
-            rb.gravityScale = defaultGravityScale;
-            slowFalling = false;
-        }
+        // Always restore normal gravity on landing, even if the reduced gravity from
+        // a red shot in a non-up direction was still active mid-air.
+        rb.gravityScale = defaultGravityScale;
+        slowFalling = false;
 
         peakHeight = transform.position.y;
     }
