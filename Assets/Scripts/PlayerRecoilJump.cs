@@ -22,6 +22,8 @@ public class PlayerRecoilJump : MonoBehaviour
     [SerializeField] private AudioSource audioSource;
     [SerializeField] private AudioClip jumpClip;
     [SerializeField] private AudioClip fastJumpClip;
+    [SerializeField] private AudioClip blueGunReloadCompleteClip;
+    [SerializeField] private AudioClip blueGunEmptyClip;
 
     private float defaultGravityScale;
     private bool isGrounded;
@@ -63,6 +65,7 @@ public class PlayerRecoilJump : MonoBehaviour
                 isBlueGunReloading = false;
                 blueGunAmmo = blueGunMaxAmmo;
                 BlueAmmoChanged?.Invoke(blueGunAmmo, blueGunMaxAmmo);
+                if (audioSource != null && blueGunReloadCompleteClip != null) audioSource.PlayOneShot(blueGunReloadCompleteClip, AudioManager.SFXVolume);
             }
         }
 
@@ -84,7 +87,11 @@ public class PlayerRecoilJump : MonoBehaviour
         }
         else if (rightClicked)
         {
-            if (isBlueGunReloading || blueGunAmmo <= 0) return;
+            if (isBlueGunReloading || blueGunAmmo <= 0)
+            {
+                if (audioSource != null && blueGunEmptyClip != null) audioSource.PlayOneShot(blueGunEmptyClip, AudioManager.SFXVolume);
+                return;
+            }
 
             blueGunAmmo--;
             BlueAmmoChanged?.Invoke(blueGunAmmo, blueGunMaxAmmo);

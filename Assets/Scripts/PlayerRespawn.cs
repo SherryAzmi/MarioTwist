@@ -4,6 +4,8 @@ public class PlayerRespawn : MonoBehaviour
 {
     [SerializeField] private Rigidbody2D rb;
     [SerializeField] private PlayerRecoilJump recoilJump;
+    [SerializeField] private AudioSource audioSource;
+    [SerializeField] private AudioClip checkpointClip;
 
     private Vector3 checkpointPosition;
 
@@ -11,6 +13,7 @@ public class PlayerRespawn : MonoBehaviour
     {
         if (rb == null) rb = GetComponent<Rigidbody2D>();
         if (recoilJump == null) recoilJump = GetComponent<PlayerRecoilJump>();
+        if (audioSource == null) audioSource = GetComponent<AudioSource>();
         checkpointPosition = transform.position;
     }
 
@@ -24,5 +27,6 @@ public class PlayerRespawn : MonoBehaviour
         transform.position = checkpointPosition;
         if (rb != null) rb.linearVelocity = Vector2.zero;
         if (recoilJump != null) recoilJump.ResetGravity();
+        if (audioSource != null && checkpointClip != null) audioSource.PlayOneShot(checkpointClip, AudioManager.SFXVolume);
     }
 }
