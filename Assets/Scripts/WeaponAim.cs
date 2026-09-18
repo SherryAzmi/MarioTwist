@@ -7,6 +7,7 @@ public class WeaponAim : MonoBehaviour
     [SerializeField] private SpriteRenderer spriteRenderer;
 
     public Vector2 AimDirection { get; private set; } = Vector2.right;
+    public SpriteRenderer SpriteRenderer => spriteRenderer;
 
     private void Awake()
     {

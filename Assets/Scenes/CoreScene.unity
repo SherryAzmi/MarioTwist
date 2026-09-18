@@ -683,6 +683,9 @@ MonoBehaviour:
   weaponAim: {fileID: 1355127613}
   playerHealth: {fileID: 867041666}
   jumpForce: 17
+  fastJumpForce: 25
+  slowGunColor: {r: 1, g: 0, b: 0, a: 1}
+  fastGunColor: {r: 0, g: 0, b: 1, a: 1}
   downwardJumpSpeedMultiplier: 0.5
   downwardFallGravityMultiplier: 0.4
   fallDamageSpeedThreshold: 6

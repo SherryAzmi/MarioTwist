@@ -8,6 +8,9 @@ public class PlayerRecoilJump : MonoBehaviour
     [SerializeField] private WeaponAim weaponAim;
     [SerializeField] private PlayerHealth playerHealth;
     [SerializeField] private float jumpForce = 10f;
+    [SerializeField] private float fastJumpForce = 25f;
+    [SerializeField] private Color slowGunColor = Color.red;
+    [SerializeField] private Color fastGunColor = Color.blue;
     [SerializeField] private float downwardJumpSpeedMultiplier = 0.5f;
     [SerializeField] private float downwardFallGravityMultiplier = 0.4f;
     [SerializeField] private float fallDamageSpeedThreshold = 6f;
@@ -33,23 +36,33 @@ public class PlayerRecoilJump : MonoBehaviour
 
         if (Mouse.current.leftButton.wasPressedThisFrame)
         {
-            if (audioSource != null && jumpClip != null) audioSource.PlayOneShot(jumpClip);
+            PerformJump(jumpForce, slowGunColor);
+        }
+        else if (Mouse.current.rightButton.wasPressedThisFrame)
+        {
+            PerformJump(fastJumpForce, fastGunColor);
+        }
+    }
 
-            Vector2 jumpDirection = -weaponAim.AimDirection;
-            bool aimingUp = jumpDirection.y < -0.1f;
+    private void PerformJump(float force, Color gunColor)
+    {
+        if (audioSource != null && jumpClip != null) audioSource.PlayOneShot(jumpClip);
+        if (weaponAim.SpriteRenderer != null) weaponAim.SpriteRenderer.color = gunColor;
 
-            if (aimingUp)
-            {
-                rb.linearVelocity = jumpDirection * jumpForce * downwardJumpSpeedMultiplier;
-                rb.gravityScale = defaultGravityScale * downwardFallGravityMultiplier;
-                slowFalling = true;
-            }
-            else
-            {
-                rb.linearVelocity = jumpDirection * jumpForce;
-                rb.gravityScale = defaultGravityScale;
-                slowFalling = false;
-            }
+        Vector2 jumpDirection = -weaponAim.AimDirection;
+        bool aimingUp = jumpDirection.y < -0.1f;
+
+        if (aimingUp)
+        {
+            rb.linearVelocity = jumpDirection * force * downwardJumpSpeedMultiplier;
+            rb.gravityScale = defaultGravityScale * downwardFallGravityMultiplier;
+            slowFalling = true;
+        }
+        else
+        {
+            rb.linearVelocity = jumpDirection * force;
+            rb.gravityScale = defaultGravityScale;
+            slowFalling = false;
         }
     }
 
