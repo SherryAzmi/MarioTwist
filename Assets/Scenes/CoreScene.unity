@@ -689,7 +689,7 @@ MonoBehaviour:
   slowGunSpeedMultiplier: 0.5
   slowGunGravityMultiplier: 0.4
   redFireRate: 0.2
-  fallDamageSpeedThreshold: 6
+  fallDamageHeightThreshold: 3
   fallDamage: 5
   audioSource: {fileID: 867041667}
   jumpClip: {fileID: 8300000, guid: cf2034be08e59b94792ad262ab59633d, type: 3}

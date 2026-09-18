@@ -14,7 +14,7 @@ public class PlayerRecoilJump : MonoBehaviour
     [SerializeField] private float slowGunSpeedMultiplier = 0.5f;
     [SerializeField] private float slowGunGravityMultiplier = 0.4f;
     [SerializeField] private float redFireRate = 0.2f;
-    [SerializeField] private float fallDamageSpeedThreshold = 6f;
+    [SerializeField] private float fallDamageHeightThreshold = 3f;
     [SerializeField] private int fallDamage = 5;
     [SerializeField] private AudioSource audioSource;
     [SerializeField] private AudioClip jumpClip;
@@ -24,6 +24,7 @@ public class PlayerRecoilJump : MonoBehaviour
     private bool slowFalling;
     private bool isGrounded;
     private float lastRedFireTime = -999f;
+    private float peakHeight;
 
     private void Awake()
     {
@@ -32,10 +33,13 @@ public class PlayerRecoilJump : MonoBehaviour
         if (playerHealth == null) playerHealth = GetComponent<PlayerHealth>();
         if (audioSource == null) audioSource = GetComponent<AudioSource>();
         defaultGravityScale = rb.gravityScale;
+        peakHeight = transform.position.y;
     }
 
     private void Update()
     {
+        if (!isGrounded) peakHeight = Mathf.Max(peakHeight, transform.position.y);
+
         if (Mouse.current == null || weaponAim == null) return;
 
         bool leftHeld = Mouse.current.leftButton.isPressed;
@@ -73,14 +77,18 @@ public class PlayerRecoilJump : MonoBehaviour
         slowFalling = isSlow;
 
         isGrounded = false;
+        peakHeight = transform.position.y;
     }
 
     private void OnCollisionEnter2D(Collision2D collision)
     {
         isGrounded = true;
 
-        float fallSpeed = Mathf.Abs(collision.relativeVelocity.y);
-        if (!slowFalling && fallSpeed > fallDamageSpeedThreshold && playerHealth != null)
+        // How far below the highest point reached since last airborne we've now landed.
+        // A small drop near the ground never hurts; only a big fall from far away does,
+        // and only if the red (slow) gun wasn't used to cushion it.
+        float fallDistance = peakHeight - transform.position.y;
+        if (!slowFalling && fallDistance > fallDamageHeightThreshold && playerHealth != null)
         {
             playerHealth.TakeDamage(fallDamage);
         }
@@ -90,10 +98,13 @@ public class PlayerRecoilJump : MonoBehaviour
             rb.gravityScale = defaultGravityScale;
             slowFalling = false;
         }
+
+        peakHeight = transform.position.y;
     }
 
     private void OnCollisionExit2D(Collision2D collision)
     {
         isGrounded = false;
+        peakHeight = transform.position.y;
     }
 }
