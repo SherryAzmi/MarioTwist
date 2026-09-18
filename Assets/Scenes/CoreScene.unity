@@ -686,8 +686,9 @@ MonoBehaviour:
   fastJumpForce: 25
   slowGunColor: {r: 1, g: 0, b: 0, a: 1}
   fastGunColor: {r: 0, g: 0, b: 1, a: 1}
-  downwardJumpSpeedMultiplier: 0.5
-  downwardFallGravityMultiplier: 0.4
+  slowGunSpeedMultiplier: 0.5
+  slowGunGravityMultiplier: 0.4
+  redFireRate: 0.2
   fallDamageSpeedThreshold: 6
   fallDamage: 5
   audioSource: {fileID: 867041667}

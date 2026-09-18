@@ -11,8 +11,9 @@ public class PlayerRecoilJump : MonoBehaviour
     [SerializeField] private float fastJumpForce = 25f;
     [SerializeField] private Color slowGunColor = Color.red;
     [SerializeField] private Color fastGunColor = Color.blue;
-    [SerializeField] private float downwardJumpSpeedMultiplier = 0.5f;
-    [SerializeField] private float downwardFallGravityMultiplier = 0.4f;
+    [SerializeField] private float slowGunSpeedMultiplier = 0.5f;
+    [SerializeField] private float slowGunGravityMultiplier = 0.4f;
+    [SerializeField] private float redFireRate = 0.2f;
     [SerializeField] private float fallDamageSpeedThreshold = 6f;
     [SerializeField] private int fallDamage = 5;
     [SerializeField] private AudioSource audioSource;
@@ -22,6 +23,7 @@ public class PlayerRecoilJump : MonoBehaviour
     private float defaultGravityScale;
     private bool slowFalling;
     private bool isGrounded;
+    private float lastRedFireTime = -999f;
 
     private void Awake()
     {
@@ -36,9 +38,11 @@ public class PlayerRecoilJump : MonoBehaviour
     {
         if (Mouse.current == null || weaponAim == null) return;
 
-        bool leftClicked = Mouse.current.leftButton.wasPressedThisFrame;
+        bool leftHeld = Mouse.current.leftButton.isPressed;
         bool rightClicked = Mouse.current.rightButton.wasPressedThisFrame;
-        if (!leftClicked && !rightClicked) return;
+        bool leftReady = leftHeld && Time.time - lastRedFireTime >= redFireRate;
+
+        if (!leftReady && !rightClicked) return;
 
         Vector2 jumpDirection = -weaponAim.AimDirection;
         bool aimingUp = jumpDirection.y < -0.1f;
@@ -47,33 +51,26 @@ public class PlayerRecoilJump : MonoBehaviour
         // into the floor with no actual movement, so skip the jump entirely.
         if (aimingUp && isGrounded) return;
 
-        if (leftClicked)
+        if (leftReady)
         {
-            PerformJump(jumpForce, slowGunColor, jumpDirection, aimingUp, jumpClip);
+            lastRedFireTime = Time.time;
+            float slowGravity = defaultGravityScale * slowGunGravityMultiplier;
+            PerformJump(jumpForce * slowGunSpeedMultiplier, slowGunColor, jumpDirection, jumpClip, slowGravity, isSlow: true);
         }
         else
         {
-            PerformJump(fastJumpForce, fastGunColor, jumpDirection, aimingUp, fastJumpClip);
+            PerformJump(fastJumpForce, fastGunColor, jumpDirection, fastJumpClip, defaultGravityScale, isSlow: false);
         }
     }
 
-    private void PerformJump(float force, Color gunColor, Vector2 jumpDirection, bool aimingUp, AudioClip clip)
+    private void PerformJump(float force, Color gunColor, Vector2 jumpDirection, AudioClip clip, float gravityScale, bool isSlow)
     {
         if (audioSource != null && clip != null) audioSource.PlayOneShot(clip);
         if (weaponAim.SpriteRenderer != null) weaponAim.SpriteRenderer.color = gunColor;
 
-        if (aimingUp)
-        {
-            rb.linearVelocity = jumpDirection * force * downwardJumpSpeedMultiplier;
-            rb.gravityScale = defaultGravityScale * downwardFallGravityMultiplier;
-            slowFalling = true;
-        }
-        else
-        {
-            rb.linearVelocity = jumpDirection * force;
-            rb.gravityScale = defaultGravityScale;
-            slowFalling = false;
-        }
+        rb.linearVelocity = jumpDirection * force;
+        rb.gravityScale = gravityScale;
+        slowFalling = isSlow;
 
         isGrounded = false;
     }
