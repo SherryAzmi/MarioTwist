@@ -9920,13 +9920,13 @@ PrefabInstance:
     m_AddedComponents:
     - targetCorrespondingSourceObject: {fileID: 7264504450884366381, guid: bad74ed5f4e950c4aa5a2fb25ba799a9, type: 3}
       insertIndex: -1
-      addedObject: {fileID: 1856432956}
+      addedObject: {fileID: 1856432962}
     - targetCorrespondingSourceObject: {fileID: 7264504450884366381, guid: bad74ed5f4e950c4aa5a2fb25ba799a9, type: 3}
       insertIndex: -1
-      addedObject: {fileID: 1856432955}
+      addedObject: {fileID: 1856432961}
     - targetCorrespondingSourceObject: {fileID: 7264504450884366381, guid: bad74ed5f4e950c4aa5a2fb25ba799a9, type: 3}
       insertIndex: -1
-      addedObject: {fileID: 1856432954}
+      addedObject: {fileID: 1856432960}
   m_SourcePrefab: {fileID: 100100000, guid: bad74ed5f4e950c4aa5a2fb25ba799a9, type: 3}
 --- !u!1 &619394800
 GameObject:
@@ -10102,7 +10102,7 @@ Transform:
   m_GameObject: {fileID: 867041660}
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: -0.1, y: 5.38, z: 0}
+  m_LocalPosition: {x: 20, y: -2.5, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
@@ -11535,7 +11535,7 @@ GameObject:
   m_CorrespondingSourceObject: {fileID: 7264504450884366381, guid: bad74ed5f4e950c4aa5a2fb25ba799a9, type: 3}
   m_PrefabInstance: {fileID: 587781545}
   m_PrefabAsset: {fileID: 0}
---- !u!66 &1856432954
+--- !u!66 &1856432960
 CompositeCollider2D:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -11574,7 +11574,7 @@ CompositeCollider2D:
   m_GenerationType: 0
   m_EdgeRadius: 0
   m_ColliderPaths:
-  - m_Collider: {fileID: 1856432956}
+  - m_Collider: {fileID: 1856432962}
     m_ColliderPaths:
     - - X: 1398849920
         Y: 6800000
@@ -16946,7 +16946,7 @@ CompositeCollider2D:
   m_OffsetDistance: 0.00005
   m_UseDelaunayMesh: 0
   m_CompositeGameObject: {fileID: 1856432949}
---- !u!50 &1856432955
+--- !u!50 &1856432961
 Rigidbody2D:
   serializedVersion: 5
   m_ObjectHideFlags: 0
@@ -16973,7 +16973,7 @@ Rigidbody2D:
   m_SleepingMode: 1
   m_CollisionDetection: 0
   m_Constraints: 0
---- !u!19719996 &1856432956
+--- !u!19719996 &1856432962
 TilemapCollider2D:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
