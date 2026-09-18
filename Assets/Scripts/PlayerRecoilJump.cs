@@ -1,5 +1,3 @@
-
-
 using UnityEngine;
 using UnityEngine.InputSystem;
 
@@ -8,9 +6,12 @@ public class PlayerRecoilJump : MonoBehaviour
 {
     [SerializeField] private Rigidbody2D rb;
     [SerializeField] private WeaponAim weaponAim;
+    [SerializeField] private PlayerHealth playerHealth;
     [SerializeField] private float jumpForce = 10f;
     [SerializeField] private float downwardJumpSpeedMultiplier = 0.5f;
     [SerializeField] private float downwardFallGravityMultiplier = 0.4f;
+    [SerializeField] private float fallDamageSpeedThreshold = 6f;
+    [SerializeField] private int fallDamage = 5;
 
     private float defaultGravityScale;
     private bool slowFalling;
@@ -19,6 +20,7 @@ public class PlayerRecoilJump : MonoBehaviour
     {
         if (rb == null) rb = GetComponent<Rigidbody2D>();
         if (weaponAim == null) weaponAim = GetComponentInChildren<WeaponAim>();
+        if (playerHealth == null) playerHealth = GetComponent<PlayerHealth>();
         defaultGravityScale = rb.gravityScale;
     }
 
@@ -48,6 +50,12 @@ public class PlayerRecoilJump : MonoBehaviour
 
     private void OnCollisionEnter2D(Collision2D collision)
     {
+        float fallSpeed = Mathf.Abs(collision.relativeVelocity.y);
+        if (!slowFalling && fallSpeed > fallDamageSpeedThreshold && playerHealth != null)
+        {
+            playerHealth.TakeDamage(fallDamage);
+        }
+
         if (slowFalling)
         {
             rb.gravityScale = defaultGravityScale;
@@ -55,4 +63,3 @@ public class PlayerRecoilJump : MonoBehaviour
         }
     }
 }
-
