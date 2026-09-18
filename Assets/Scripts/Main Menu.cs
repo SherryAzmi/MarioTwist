@@ -1,6 +1,7 @@
 using UnityEngine;
 using UnityEngine.UI;
 using UnityEngine.SceneManagement;
+using UnityEngine.Audio;
 public class MainMenu : MonoBehaviour
 {
     // Start is called once before the first execution of Update after the MonoBehaviour is created
@@ -36,6 +37,10 @@ public class MainMenu : MonoBehaviour
     //1- Main Menu Panel
     public void StartGame()
     {
+        //load scene
+
+        SceneManager.LoadScene("GameScene"); // will be changed to the actual game scene
+
         if (mainMenuPanel) mainMenuPanel.SetActive(false);
         if (settingsPanel) settingsPanel.SetActive(false);
         if (creditsPanel) creditsPanel.SetActive(false);
@@ -154,9 +159,7 @@ public class MainMenu : MonoBehaviour
             }
             else
             {
-
                 OpenPausePanel();
-
             }
         }
     }
@@ -166,4 +169,20 @@ public class MainMenu : MonoBehaviour
         Time.timeScale = 1f;
         SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex);
     }
+    // Quit Game we might add it to the main menu
+    public void QuitGame()
+    {
+        Application.Quit();
+    }
+    public void SetMusicVolume(float volume)
+    {
+        // Set the music volume in your audio manager or audio source
+
+    }
+    public void SetSFXVolume(float volume)
+    {
+        // Set the SFX volume in your audio manager or audio source
+
+    }
+
 }
