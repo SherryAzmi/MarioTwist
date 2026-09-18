@@ -75,11 +75,6 @@ public class PlayerRecoilJump : MonoBehaviour
         if (!leftReady && !rightClicked) return;
 
         Vector2 jumpDirection = -weaponAim.AimDirection;
-        bool aimingUp = jumpDirection.y < -0.1f;
-
-        // Aiming up launches downward. If already grounded, that would just push
-        // into the floor with no actual movement, so skip the jump entirely.
-        if (aimingUp && isGrounded) return;
 
         if (leftReady)
         {
