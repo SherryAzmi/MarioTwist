@@ -15,7 +15,6 @@ public class HealthBarUI : MonoBehaviour
     {
         if (playerHealth == null) return;
         playerHealth.HealthChanged += UpdateBar;
-        
     }
 
     private void OnDisable()
@@ -28,7 +27,7 @@ public class HealthBarUI : MonoBehaviour
     {
         // Runs after every object's Awake has completed, unlike OnEnable
         // (whose cross-object ordering relative to other Awakes isn't guaranteed),
-        // so PlayerHealth.CurrentHealth is reliably initialized by this point if the damage is .
+        // so PlayerHealth.CurrentHealth is reliably initialized by this point.
         if (playerHealth == null) return;
         UpdateBar(playerHealth.CurrentHealth, playerHealth.MaxHealth);
     }
