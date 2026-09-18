@@ -4,23 +4,30 @@ using UnityEngine;
 public class PlayerHealth : MonoBehaviour
 {
     [SerializeField] private int maxHealth = 100;
+    [SerializeField] private int maxLives = 3;
     [SerializeField] private AudioSource audioSource;
     [SerializeField] private AudioClip damageClip;
     [SerializeField] private AudioClip gameOverClip;
     [SerializeField] private CameraShake cameraShake;
+    [SerializeField] private PlayerRespawn playerRespawn;
 
     public int MaxHealth => maxHealth;
     public int CurrentHealth { get; private set; }
+    public int MaxLives => maxLives;
+    public int CurrentLives { get; private set; }
     public bool IsGameOver { get; private set; }
 
     public event System.Action<int, int> HealthChanged;
+    public event System.Action<int, int> LivesChanged;
     public event System.Action GameOver;
 
     private void Awake()
     {
         CurrentHealth = maxHealth;
+        CurrentLives = maxLives;
         if (audioSource == null) audioSource = GetComponent<AudioSource>();
         if (cameraShake == null) cameraShake = GetComponentInChildren<CameraShake>();
+        if (playerRespawn == null) playerRespawn = GetComponent<PlayerRespawn>();
     }
 
     public void Kill()
@@ -38,14 +45,36 @@ public class PlayerHealth : MonoBehaviour
         if (damageClip != null) audioSource.PlayOneShot(damageClip);
         if (cameraShake != null) cameraShake.Shake();
 
-        if (CurrentHealth <= 0)
-        {
-            IsGameOver = true;
-            if (gameOverClip != null) audioSource.PlayOneShot(gameOverClip);
-            GameOver?.Invoke();
+        if (CurrentHealth <= 0) TriggerGameOver();
+    }
 
-            var recoilJump = GetComponent<PlayerRecoilJump>();
-            if (recoilJump != null) recoilJump.enabled = false;
+    public void LoseHeart()
+    {
+        if (IsGameOver) return;
+
+        CurrentLives = Mathf.Max(0, CurrentLives - 1);
+        LivesChanged?.Invoke(CurrentLives, maxLives);
+
+        if (damageClip != null) audioSource.PlayOneShot(damageClip);
+        if (cameraShake != null) cameraShake.Shake();
+
+        if (CurrentLives <= 0)
+        {
+            TriggerGameOver();
         }
+        else if (playerRespawn != null)
+        {
+            playerRespawn.RespawnAtCheckpoint();
+        }
+    }
+
+    private void TriggerGameOver()
+    {
+        IsGameOver = true;
+        if (gameOverClip != null) audioSource.PlayOneShot(gameOverClip);
+        GameOver?.Invoke();
+
+        var recoilJump = GetComponent<PlayerRecoilJump>();
+        if (recoilJump != null) recoilJump.enabled = false;
     }
 }

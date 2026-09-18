@@ -27,6 +27,11 @@ public class PlayerRecoilJump : MonoBehaviour
 
     public bool IsGrounded => isGrounded;
 
+    public void ResetGravity()
+    {
+        rb.gravityScale = defaultGravityScale;
+    }
+
     private void Awake()
     {
         if (rb == null) rb = GetComponent<Rigidbody2D>();
