@@ -7,6 +7,7 @@ public class PlayerHealth : MonoBehaviour
     [SerializeField] private AudioSource audioSource;
     [SerializeField] private AudioClip damageClip;
     [SerializeField] private AudioClip gameOverClip;
+    [SerializeField] private CameraShake cameraShake;
 
     public int MaxHealth => maxHealth;
     public int CurrentHealth { get; private set; }
@@ -19,6 +20,7 @@ public class PlayerHealth : MonoBehaviour
     {
         CurrentHealth = maxHealth;
         if (audioSource == null) audioSource = GetComponent<AudioSource>();
+        if (cameraShake == null) cameraShake = GetComponentInChildren<CameraShake>();
     }
 
     public void TakeDamage(int amount)
@@ -29,6 +31,7 @@ public class PlayerHealth : MonoBehaviour
         HealthChanged?.Invoke(CurrentHealth, maxHealth);
 
         if (damageClip != null) audioSource.PlayOneShot(damageClip);
+        if (cameraShake != null) cameraShake.Shake();
 
         if (CurrentHealth <= 0)
         {

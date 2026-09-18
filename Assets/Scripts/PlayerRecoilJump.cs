@@ -8,15 +8,23 @@ public class PlayerRecoilJump : MonoBehaviour
     [SerializeField] private WeaponAim weaponAim;
     [SerializeField] private PlayerHealth playerHealth;
     [SerializeField] private float jumpForce = 10f;
-    [SerializeField] private float downwardJumpSpeedMultiplier = 0.5f;
-    [SerializeField] private float downwardFallGravityMultiplier = 0.4f;
-    [SerializeField] private float fallDamageSpeedThreshold = 6f;
+    [SerializeField] private float fastJumpForce = 25f;
+    [SerializeField] private Color slowGunColor = Color.red;
+    [SerializeField] private Color fastGunColor = Color.blue;
+    [SerializeField] private float slowGunSpeedMultiplier = 0.5f;
+    [SerializeField] private float slowGunGravityMultiplier = 0.4f;
+    [SerializeField] private float redFireRate = 0.2f;
+    [SerializeField] private float fallDamageHeightThreshold = 3f;
     [SerializeField] private int fallDamage = 5;
     [SerializeField] private AudioSource audioSource;
     [SerializeField] private AudioClip jumpClip;
+    [SerializeField] private AudioClip fastJumpClip;
 
     private float defaultGravityScale;
     private bool slowFalling;
+    private bool isGrounded;
+    private float lastRedFireTime = -999f;
+    private float peakHeight;
 
     private void Awake()
     {
@@ -25,46 +33,80 @@ public class PlayerRecoilJump : MonoBehaviour
         if (playerHealth == null) playerHealth = GetComponent<PlayerHealth>();
         if (audioSource == null) audioSource = GetComponent<AudioSource>();
         defaultGravityScale = rb.gravityScale;
+        peakHeight = transform.position.y;
     }
 
     private void Update()
     {
+        if (!isGrounded) peakHeight = Mathf.Max(peakHeight, transform.position.y);
+
         if (Mouse.current == null || weaponAim == null) return;
 
-        if (Mouse.current.leftButton.wasPressedThisFrame)
+        bool leftHeld = Mouse.current.leftButton.isPressed;
+        bool rightClicked = Mouse.current.rightButton.wasPressedThisFrame;
+        bool leftReady = leftHeld && Time.time - lastRedFireTime >= redFireRate;
+
+        if (!leftReady && !rightClicked) return;
+
+        Vector2 jumpDirection = -weaponAim.AimDirection;
+        bool aimingUp = jumpDirection.y < -0.1f;
+
+        // Aiming up launches downward. If already grounded, that would just push
+        // into the floor with no actual movement, so skip the jump entirely.
+        if (aimingUp && isGrounded) return;
+
+        if (leftReady)
         {
-            if (audioSource != null && jumpClip != null) audioSource.PlayOneShot(jumpClip);
-
-            Vector2 jumpDirection = -weaponAim.AimDirection;
-            bool aimingUp = jumpDirection.y < -0.1f;
-
-            if (aimingUp)
-            {
-                rb.linearVelocity = jumpDirection * jumpForce * downwardJumpSpeedMultiplier;
-                rb.gravityScale = defaultGravityScale * downwardFallGravityMultiplier;
-                slowFalling = true;
-            }
-            else
-            {
-                rb.linearVelocity = jumpDirection * jumpForce;
-                rb.gravityScale = defaultGravityScale;
-                slowFalling = false;
-            }
+            lastRedFireTime = Time.time;
+            float slowGravity = defaultGravityScale * slowGunGravityMultiplier;
+            // Fall-damage immunity only counts if red was used specifically to cushion
+            // the descent (aiming up); the speed/gravity reduction itself still applies
+            // to red in every direction.
+            PerformJump(jumpForce * slowGunSpeedMultiplier, slowGunColor, jumpDirection, jumpClip, slowGravity, isSlow: aimingUp);
         }
+        else
+        {
+            PerformJump(fastJumpForce, fastGunColor, jumpDirection, fastJumpClip, defaultGravityScale, isSlow: false);
+        }
+    }
+
+    private void PerformJump(float force, Color gunColor, Vector2 jumpDirection, AudioClip clip, float gravityScale, bool isSlow)
+    {
+        if (audioSource != null && clip != null) audioSource.PlayOneShot(clip);
+        if (weaponAim.SpriteRenderer != null) weaponAim.SpriteRenderer.color = gunColor;
+
+        rb.linearVelocity = jumpDirection * force;
+        rb.gravityScale = gravityScale;
+        slowFalling = isSlow;
+
+        isGrounded = false;
+        peakHeight = transform.position.y;
     }
 
     private void OnCollisionEnter2D(Collision2D collision)
     {
-        float fallSpeed = Mathf.Abs(collision.relativeVelocity.y);
-        if (!slowFalling && fallSpeed > fallDamageSpeedThreshold && playerHealth != null)
+        isGrounded = true;
+
+        // How far below the highest point reached since last airborne we've now landed.
+        // A small drop near the ground never hurts; only a big fall from far away does,
+        // and only if the red (slow) gun wasn't used to cushion it.
+        float fallDistance = peakHeight - transform.position.y;
+        if (!slowFalling && fallDistance > fallDamageHeightThreshold && playerHealth != null)
         {
             playerHealth.TakeDamage(fallDamage);
         }
 
-        if (slowFalling)
-        {
-            rb.gravityScale = defaultGravityScale;
-            slowFalling = false;
-        }
+        // Always restore normal gravity on landing, even if the reduced gravity from
+        // a red shot in a non-up direction was still active mid-air.
+        rb.gravityScale = defaultGravityScale;
+        slowFalling = false;
+
+        peakHeight = transform.position.y;
+    }
+
+    private void OnCollisionExit2D(Collision2D collision)
+    {
+        isGrounded = false;
+        peakHeight = transform.position.y;
     }
 }
