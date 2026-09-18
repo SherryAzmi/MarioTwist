@@ -17,6 +17,8 @@ public class PlayerRecoilJump : MonoBehaviour
     [SerializeField] private float slowGunSpeedMultiplier = 0.5f;
     [SerializeField] private float slowGunGravityMultiplier = 0.4f;
     [SerializeField] private float redFireRate = 0.2f;
+    [SerializeField] private int blueGunMaxAmmo = 2;
+    [SerializeField] private float blueGunReloadTime = 1f;
     [SerializeField] private AudioSource audioSource;
     [SerializeField] private AudioClip jumpClip;
     [SerializeField] private AudioClip fastJumpClip;
@@ -24,8 +26,16 @@ public class PlayerRecoilJump : MonoBehaviour
     private float defaultGravityScale;
     private bool isGrounded;
     private float lastRedFireTime = -999f;
+    private int blueGunAmmo;
+    private bool isBlueGunReloading;
+    private float reloadTimer;
 
     public bool IsGrounded => isGrounded;
+    public int BlueGunAmmo => blueGunAmmo;
+    public int BlueGunMaxAmmo => blueGunMaxAmmo;
+    public bool IsBlueGunReloading => isBlueGunReloading;
+
+    public event System.Action<int, int> BlueAmmoChanged;
 
     public void ResetGravity()
     {
@@ -40,10 +50,22 @@ public class PlayerRecoilJump : MonoBehaviour
         if (playerHealth == null) playerHealth = GetComponent<PlayerHealth>();
         if (audioSource == null) audioSource = GetComponent<AudioSource>();
         defaultGravityScale = rb.gravityScale;
+        blueGunAmmo = blueGunMaxAmmo;
     }
 
     private void Update()
     {
+        if (isBlueGunReloading)
+        {
+            reloadTimer -= Time.deltaTime;
+            if (reloadTimer <= 0f)
+            {
+                isBlueGunReloading = false;
+                blueGunAmmo = blueGunMaxAmmo;
+                BlueAmmoChanged?.Invoke(blueGunAmmo, blueGunMaxAmmo);
+            }
+        }
+
         if (Mouse.current == null || weaponAim == null) return;
 
         bool leftHeld = Mouse.current.leftButton.isPressed;
@@ -65,9 +87,19 @@ public class PlayerRecoilJump : MonoBehaviour
             float slowGravity = defaultGravityScale * slowGunGravityMultiplier;
             PerformJump(jumpForce * slowGunSpeedMultiplier, slowGunSprite, slowGunParticleColor, jumpDirection, jumpClip, slowGravity);
         }
-        else
+        else if (rightClicked)
         {
+            if (isBlueGunReloading || blueGunAmmo <= 0) return;
+
+            blueGunAmmo--;
+            BlueAmmoChanged?.Invoke(blueGunAmmo, blueGunMaxAmmo);
             PerformJump(fastJumpForce, fastGunSprite, fastGunParticleColor, jumpDirection, fastJumpClip, defaultGravityScale);
+
+            if (blueGunAmmo <= 0)
+            {
+                isBlueGunReloading = true;
+                reloadTimer = blueGunReloadTime;
+            }
         }
     }
 
