@@ -17,6 +17,7 @@ public class PlayerRecoilJump : MonoBehaviour
     [SerializeField] private int fallDamage = 5;
     [SerializeField] private AudioSource audioSource;
     [SerializeField] private AudioClip jumpClip;
+    [SerializeField] private AudioClip fastJumpClip;
 
     private float defaultGravityScale;
     private bool slowFalling;
@@ -48,17 +49,17 @@ public class PlayerRecoilJump : MonoBehaviour
 
         if (leftClicked)
         {
-            PerformJump(jumpForce, slowGunColor, jumpDirection, aimingUp);
+            PerformJump(jumpForce, slowGunColor, jumpDirection, aimingUp, jumpClip);
         }
         else
         {
-            PerformJump(fastJumpForce, fastGunColor, jumpDirection, aimingUp);
+            PerformJump(fastJumpForce, fastGunColor, jumpDirection, aimingUp, fastJumpClip);
         }
     }
 
-    private void PerformJump(float force, Color gunColor, Vector2 jumpDirection, bool aimingUp)
+    private void PerformJump(float force, Color gunColor, Vector2 jumpDirection, bool aimingUp, AudioClip clip)
     {
-        if (audioSource != null && jumpClip != null) audioSource.PlayOneShot(jumpClip);
+        if (audioSource != null && clip != null) audioSource.PlayOneShot(clip);
         if (weaponAim.SpriteRenderer != null) weaponAim.SpriteRenderer.color = gunColor;
 
         if (aimingUp)

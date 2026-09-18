@@ -692,6 +692,7 @@ MonoBehaviour:
   fallDamage: 5
   audioSource: {fileID: 867041667}
   jumpClip: {fileID: 8300000, guid: cf2034be08e59b94792ad262ab59633d, type: 3}
+  fastJumpClip: {fileID: 8300000, guid: 7990bb353e13ffa44a300f8ce59e758c, type: 3}
 --- !u!61 &867041664
 BoxCollider2D:
   m_ObjectHideFlags: 0
