@@ -12,6 +12,8 @@ public class PlayerRecoilJump : MonoBehaviour
     [SerializeField] private float downwardFallGravityMultiplier = 0.4f;
     [SerializeField] private float fallDamageSpeedThreshold = 6f;
     [SerializeField] private int fallDamage = 5;
+    [SerializeField] private AudioSource audioSource;
+    [SerializeField] private AudioClip jumpClip;
 
     private float defaultGravityScale;
     private bool slowFalling;
@@ -21,6 +23,7 @@ public class PlayerRecoilJump : MonoBehaviour
         if (rb == null) rb = GetComponent<Rigidbody2D>();
         if (weaponAim == null) weaponAim = GetComponentInChildren<WeaponAim>();
         if (playerHealth == null) playerHealth = GetComponent<PlayerHealth>();
+        if (audioSource == null) audioSource = GetComponent<AudioSource>();
         defaultGravityScale = rb.gravityScale;
     }
 
@@ -30,6 +33,8 @@ public class PlayerRecoilJump : MonoBehaviour
 
         if (Mouse.current.leftButton.wasPressedThisFrame)
         {
+            if (audioSource != null && jumpClip != null) audioSource.PlayOneShot(jumpClip);
+
             Vector2 jumpDirection = -weaponAim.AimDirection;
             bool aimingUp = jumpDirection.y < -0.1f;
 
