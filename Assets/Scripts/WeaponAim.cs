@@ -34,7 +34,7 @@ public class WeaponAim : MonoBehaviour
 
         if (spriteRenderer != null)
         {
-            spriteRenderer.flipY = facingLeft;
+            spriteRenderer.flipX = facingLeft;
         }
 
         if (playerSpriteRenderer != null)

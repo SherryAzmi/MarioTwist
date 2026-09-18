@@ -9,8 +9,8 @@ public class PlayerRecoilJump : MonoBehaviour
     [SerializeField] private PlayerHealth playerHealth;
     [SerializeField] private float jumpForce = 10f;
     [SerializeField] private float fastJumpForce = 25f;
-    [SerializeField] private Color slowGunColor = Color.red;
-    [SerializeField] private Color fastGunColor = Color.blue;
+    [SerializeField] private Sprite slowGunSprite;
+    [SerializeField] private Sprite fastGunSprite;
     [SerializeField] private float slowGunSpeedMultiplier = 0.5f;
     [SerializeField] private float slowGunGravityMultiplier = 0.4f;
     [SerializeField] private float redFireRate = 0.2f;
@@ -62,18 +62,18 @@ public class PlayerRecoilJump : MonoBehaviour
             // Fall-damage immunity only counts if red was used specifically to cushion
             // the descent (aiming up); the speed/gravity reduction itself still applies
             // to red in every direction.
-            PerformJump(jumpForce * slowGunSpeedMultiplier, slowGunColor, jumpDirection, jumpClip, slowGravity, isSlow: aimingUp);
+            PerformJump(jumpForce * slowGunSpeedMultiplier, slowGunSprite, jumpDirection, jumpClip, slowGravity, isSlow: aimingUp);
         }
         else
         {
-            PerformJump(fastJumpForce, fastGunColor, jumpDirection, fastJumpClip, defaultGravityScale, isSlow: false);
+            PerformJump(fastJumpForce, fastGunSprite, jumpDirection, fastJumpClip, defaultGravityScale, isSlow: false);
         }
     }
 
-    private void PerformJump(float force, Color gunColor, Vector2 jumpDirection, AudioClip clip, float gravityScale, bool isSlow)
+    private void PerformJump(float force, Sprite gunSprite, Vector2 jumpDirection, AudioClip clip, float gravityScale, bool isSlow)
     {
         if (audioSource != null && clip != null) audioSource.PlayOneShot(clip);
-        if (weaponAim.SpriteRenderer != null) weaponAim.SpriteRenderer.color = gunColor;
+        if (weaponAim.SpriteRenderer != null && gunSprite != null) weaponAim.SpriteRenderer.sprite = gunSprite;
 
         rb.linearVelocity = jumpDirection * force;
         rb.gravityScale = gravityScale;
