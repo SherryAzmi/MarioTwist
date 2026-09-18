@@ -5,6 +5,7 @@ public class WeaponAim : MonoBehaviour
 {
     [SerializeField] private Camera cam;
     [SerializeField] private SpriteRenderer spriteRenderer;
+    [SerializeField] private SpriteRenderer playerSpriteRenderer;
 
     public Vector2 AimDirection { get; private set; } = Vector2.right;
     public SpriteRenderer SpriteRenderer => spriteRenderer;
@@ -13,6 +14,7 @@ public class WeaponAim : MonoBehaviour
     {
         if (cam == null) cam = Camera.main;
         if (spriteRenderer == null) spriteRenderer = GetComponentInChildren<SpriteRenderer>();
+        if (playerSpriteRenderer == null) playerSpriteRenderer = GetComponentInParent<SpriteRenderer>();
     }
 
     private void Update()
@@ -28,10 +30,16 @@ public class WeaponAim : MonoBehaviour
 
         transform.rotation = Quaternion.Euler(0f, 0f, angle);
 
+        bool facingLeft = angle > 90f || angle < -90f;
+
         if (spriteRenderer != null)
         {
-            bool facingLeft = angle > 90f || angle < -90f;
-            spriteRenderer.flipY = facingLeft;
+            spriteRenderer.flipX = facingLeft;
+        }
+
+        if (playerSpriteRenderer != null)
+        {
+            playerSpriteRenderer.flipX = facingLeft;
         }
     }
 }
