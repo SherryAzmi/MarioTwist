@@ -71,6 +71,15 @@ public class PlayerHealth : MonoBehaviour
     private void TriggerGameOver()
     {
         IsGameOver = true;
+
+        // Silence everything else in the game (hazard loops, any background music
+        // that gets added later) so only the game-over clip is audible.
+        var allAudioSources = FindObjectsByType<AudioSource>(FindObjectsSortMode.None);
+        foreach (var src in allAudioSources)
+        {
+            if (src != audioSource) src.Stop();
+        }
+
         if (gameOverClip != null) audioSource.PlayOneShot(gameOverClip);
         GameOver?.Invoke();
 
