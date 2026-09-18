@@ -11,6 +11,9 @@ public class PlayerRecoilJump : MonoBehaviour
     [SerializeField] private float fastJumpForce = 25f;
     [SerializeField] private Sprite slowGunSprite;
     [SerializeField] private Sprite fastGunSprite;
+    [SerializeField] private ParticleSystem gunParticles;
+    [SerializeField] private Color slowGunParticleColor = Color.red;
+    [SerializeField] private Color fastGunParticleColor = Color.blue;
     [SerializeField] private float slowGunSpeedMultiplier = 0.5f;
     [SerializeField] private float slowGunGravityMultiplier = 0.4f;
     [SerializeField] private float redFireRate = 0.2f;
@@ -30,6 +33,7 @@ public class PlayerRecoilJump : MonoBehaviour
     {
         if (rb == null) rb = GetComponent<Rigidbody2D>();
         if (weaponAim == null) weaponAim = GetComponentInChildren<WeaponAim>();
+        if (gunParticles == null && weaponAim != null) gunParticles = weaponAim.GetComponentInChildren<ParticleSystem>();
         if (playerHealth == null) playerHealth = GetComponent<PlayerHealth>();
         if (audioSource == null) audioSource = GetComponent<AudioSource>();
         defaultGravityScale = rb.gravityScale;
@@ -62,18 +66,25 @@ public class PlayerRecoilJump : MonoBehaviour
             // Fall-damage immunity only counts if red was used specifically to cushion
             // the descent (aiming up); the speed/gravity reduction itself still applies
             // to red in every direction.
-            PerformJump(jumpForce * slowGunSpeedMultiplier, slowGunSprite, jumpDirection, jumpClip, slowGravity, isSlow: aimingUp);
+            PerformJump(jumpForce * slowGunSpeedMultiplier, slowGunSprite, slowGunParticleColor, jumpDirection, jumpClip, slowGravity, isSlow: aimingUp);
         }
         else
         {
-            PerformJump(fastJumpForce, fastGunSprite, jumpDirection, fastJumpClip, defaultGravityScale, isSlow: false);
+            PerformJump(fastJumpForce, fastGunSprite, fastGunParticleColor, jumpDirection, fastJumpClip, defaultGravityScale, isSlow: false);
         }
     }
 
-    private void PerformJump(float force, Sprite gunSprite, Vector2 jumpDirection, AudioClip clip, float gravityScale, bool isSlow)
+    private void PerformJump(float force, Sprite gunSprite, Color particleColor, Vector2 jumpDirection, AudioClip clip, float gravityScale, bool isSlow)
     {
         if (audioSource != null && clip != null) audioSource.PlayOneShot(clip);
         if (weaponAim.SpriteRenderer != null && gunSprite != null) weaponAim.SpriteRenderer.sprite = gunSprite;
+
+        if (gunParticles != null)
+        {
+            var main = gunParticles.main;
+            main.startColor = particleColor;
+            gunParticles.Play();
+        }
 
         rb.linearVelocity = jumpDirection * force;
         rb.gravityScale = gravityScale;
