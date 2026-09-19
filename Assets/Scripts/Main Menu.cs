@@ -1,3 +1,4 @@
+using System.Collections;
 using UnityEngine;
 using UnityEngine.UI;
 using UnityEngine.SceneManagement;
@@ -25,9 +26,15 @@ public class MainMenu : MonoBehaviour
 
 
 
+    [Header("Start Game")]
+    [SerializeField] private ScreenFader screenFader;
+    [SerializeField] private string cutsceneScene = "cutScene";
+    [SerializeField] private float fadeOutDuration = 0.7f;
+
     private bool isGameOver = false;
     private bool isGameStarted = false;
     private bool pausedForSettings = false;
+    private bool isStarting = false;
 
 
     void Start()
@@ -38,21 +45,20 @@ public class MainMenu : MonoBehaviour
     //1- Main Menu Panel
     public void StartGame()
     {
-        //load scene
+        if (isStarting) return;   // ignore extra clicks while the screen is fading
+        isStarting = true;
+        StartCoroutine(StartGameRoutine());
+    }
 
-        SceneManager.LoadScene("CoreScene");
-
-        if (mainMenuPanel) mainMenuPanel.SetActive(false);
-        if (settingsPanel) settingsPanel.SetActive(false);
-        if (creditsPanel) creditsPanel.SetActive(false);
-        if (pausePanel) pausePanel.SetActive(false);
-        if (instructionsPanel) instructionsPanel.SetActive(false);
-        if (winPanel) winPanel.SetActive(false);
-        if (losePanel) losePanel.SetActive(false);
+    // Fade the menu to black, then go to the intro cutscene (which loads the game when it finishes).
+    private IEnumerator StartGameRoutine()
+    {
+        if (screenFader != null) yield return screenFader.FadeTo(1f, fadeOutDuration);
 
         isGameStarted = true;
         isGameOver = false;
         Time.timeScale = 1f;
+        SceneManager.LoadScene(cutsceneScene);
     }
     public void ShowMainMenu()
     {
