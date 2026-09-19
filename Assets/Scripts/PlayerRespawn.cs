@@ -35,7 +35,11 @@ public class PlayerRespawn : MonoBehaviour
     {
         transform.position = GroundSnapped(checkpointPosition);
         if (rb != null) rb.linearVelocity = Vector2.zero;
-        if (recoilJump != null) recoilJump.ResetGravity();
+        if (recoilJump != null)
+        {
+            recoilJump.ResetGravity();
+            recoilJump.RefillBlueGun();
+        }
         if (audioSource != null && checkpointClip != null) audioSource.PlayOneShot(checkpointClip, AudioManager.SFXVolume);
 
         if (protectionRoutine != null) StopCoroutine(protectionRoutine);

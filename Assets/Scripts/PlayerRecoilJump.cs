@@ -48,6 +48,16 @@ public class PlayerRecoilJump : MonoBehaviour
         rb.gravityScale = defaultGravityScale;
     }
 
+    // Gives the blue gun all its bullets back (used when the player respawns at a checkpoint).
+    public void RefillBlueGun()
+    {
+        blueGunRechargeTimer = 0f;
+        if (blueGunAmmo == blueGunMaxAmmo) return;
+
+        blueGunAmmo = blueGunMaxAmmo;
+        BlueAmmoChanged?.Invoke(blueGunAmmo, blueGunMaxAmmo);
+    }
+
     private void Awake()
     {
         if (rb == null) rb = GetComponent<Rigidbody2D>();
