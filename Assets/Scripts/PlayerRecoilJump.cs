@@ -7,6 +7,7 @@ public class PlayerRecoilJump : MonoBehaviour
     [SerializeField] private Rigidbody2D rb;
     [SerializeField] private WeaponAim weaponAim;
     [SerializeField] private PlayerHealth playerHealth;
+    [SerializeField] private Animator animator;
     [SerializeField] private float jumpForce = 10f;
     [SerializeField] private float fastJumpForce = 25f;
     [SerializeField] private Sprite slowGunSprite;
@@ -26,6 +27,8 @@ public class PlayerRecoilJump : MonoBehaviour
     [SerializeField] private AudioClip fastJumpClip;
     [SerializeField] private AudioClip blueGunReloadCompleteClip;
     [SerializeField] private AudioClip blueGunEmptyClip;
+
+    private static readonly int JumpTrigger = Animator.StringToHash("Jump");
 
     private float defaultGravityScale;
     private bool isGrounded;
@@ -51,6 +54,7 @@ public class PlayerRecoilJump : MonoBehaviour
         if (rb == null) rb = GetComponent<Rigidbody2D>();
         if (weaponAim == null) weaponAim = GetComponentInChildren<WeaponAim>();
         if (playerHealth == null) playerHealth = GetComponent<PlayerHealth>();
+        if (animator == null) animator = GetComponent<Animator>();
         if (audioSource == null) audioSource = GetComponent<AudioSource>();
         defaultGravityScale = rb.gravityScale;
         blueGunAmmo = blueGunMaxAmmo;
@@ -112,6 +116,7 @@ public class PlayerRecoilJump : MonoBehaviour
         if (weaponAim.SpriteRenderer != null && gunSprite != null) weaponAim.SpriteRenderer.sprite = gunSprite;
 
         SpawnMuzzleEffect(particleColor, muzzleOffset, jumpDirection);
+        if (animator != null) animator.SetTrigger(JumpTrigger);
 
         rb.linearVelocity = jumpDirection * force;
         rb.gravityScale = gravityScale;

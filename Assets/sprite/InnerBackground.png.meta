@@ -1,13 +1,10 @@
 fileFormatVersion: 2
-guid: 9ffe2e288378a9a42aa9fb12efa7b960
+guid: ada310e78b96cef40b827408d9a9bb28
 TextureImporter:
   internalIDToNameTable:
   - first:
-      213: -7274165349901705138
-    second: player jumping_0
-  - first:
-      213: -2847308069307751819
-    second: player jumping_1
+      213: -639996880482582656
+    second: InnerBackground_0
   externalObjects: {}
   serializedVersion: 13
   mipmaps:
@@ -54,7 +51,7 @@ TextureImporter:
   spriteMeshType: 1
   alignment: 0
   spritePivot: {x: 0.5, y: 0.5}
-  spritePixelsToUnits: 500
+  spritePixelsToUnits: 100
   spriteBorder: {x: 0, y: 0, z: 0, w: 0}
   spriteGenerateFallbackPhysicsShape: 1
   alphaUsage: 1
@@ -116,13 +113,13 @@ TextureImporter:
     serializedVersion: 2
     sprites:
     - serializedVersion: 2
-      name: player jumping_0
+      name: InnerBackground_0
       rect:
         serializedVersion: 2
-        x: 504
-        y: 467
-        width: 1056
-        height: 1245
+        x: 0
+        y: 0
+        width: 1920
+        height: 1080
       alignment: 0
       pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -131,30 +128,8 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: -1
       bones: []
-      spriteID: e4067a98729fc0b90800000000000000
-      internalID: -7274165349901705138
-      vertices: []
-      indices: 
-      edges: []
-      weights: []
-    - serializedVersion: 2
-      name: player jumping_1
-      rect:
-        serializedVersion: 2
-        x: 913
-        y: 472
-        width: 11
-        height: 6
-      alignment: 0
-      pivot: {x: 0, y: 0}
-      border: {x: 0, y: 0, z: 0, w: 0}
-      customData: 
-      outline: []
-      physicsShape: []
-      tessellationDetail: -1
-      bones: []
-      spriteID: 572eeca85645c78d0800000000000000
-      internalID: -2847308069307751819
+      spriteID: 08f3a716a364e17f0800000000000000
+      internalID: -639996880482582656
       vertices: []
       indices: 
       edges: []
@@ -173,8 +148,7 @@ TextureImporter:
     spriteCustomMetadata:
       entries: []
     nameFileIdTable:
-      player jumping_0: -7274165349901705138
-      player jumping_1: -2847308069307751819
+      InnerBackground_0: -639996880482582656
   mipmapLimitGroupName: 
   pSDRemoveMatte: 0
   userData: 
