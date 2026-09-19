@@ -3,6 +3,7 @@ using UnityEngine;
 public class PlayerRespawn : MonoBehaviour
 {
     [SerializeField] private Rigidbody2D rb;
+    [SerializeField] private BoxCollider2D boxCollider;
     [SerializeField] private PlayerRecoilJump recoilJump;
     [SerializeField] private PlayerHealth playerHealth;
     [SerializeField] private AudioSource audioSource;
@@ -18,6 +19,7 @@ public class PlayerRespawn : MonoBehaviour
     private void Awake()
     {
         if (rb == null) rb = GetComponent<Rigidbody2D>();
+        if (boxCollider == null) boxCollider = GetComponent<BoxCollider2D>();
         if (recoilJump == null) recoilJump = GetComponent<PlayerRecoilJump>();
         if (playerHealth == null) playerHealth = GetComponent<PlayerHealth>();
         if (audioSource == null) audioSource = GetComponent<AudioSource>();
@@ -31,13 +33,38 @@ public class PlayerRespawn : MonoBehaviour
 
     public void RespawnAtCheckpoint()
     {
-        transform.position = checkpointPosition;
+        transform.position = GroundSnapped(checkpointPosition);
         if (rb != null) rb.linearVelocity = Vector2.zero;
         if (recoilJump != null) recoilJump.ResetGravity();
         if (audioSource != null && checkpointClip != null) audioSource.PlayOneShot(checkpointClip, AudioManager.SFXVolume);
 
         if (protectionRoutine != null) StopCoroutine(protectionRoutine);
         protectionRoutine = StartCoroutine(PlayProtection());
+    }
+
+    // Checkpoint markers are hand-placed and don't always sit exactly on the
+    // ground surface, so teleporting straight to a stored marker position can
+    // leave the player's collider a little embedded in the ground. Normally
+    // physics resolves that overlap within a frame or two and it's barely
+    // noticeable, but the Kinematic freeze during PlayProtection holds the
+    // player at that exact spot for the whole protection window, making any
+    // sunken start (then a sudden pop once physics resumes) clearly visible.
+    private Vector3 GroundSnapped(Vector3 targetPosition)
+    {
+        if (boxCollider == null) return targetPosition;
+
+        var hits = Physics2D.RaycastAll(new Vector2(targetPosition.x, targetPosition.y + 5f), Vector2.down, 20f);
+        foreach (var hit in hits)
+        {
+            if (hit.collider == null || hit.collider.isTrigger || hit.collider.gameObject == gameObject) continue;
+
+            float halfHeight = boxCollider.size.y * transform.localScale.y / 2f;
+            float colliderOffsetY = boxCollider.offset.y * transform.localScale.y;
+            targetPosition.y = hit.point.y + halfHeight - colliderOffsetY;
+            return targetPosition;
+        }
+
+        return targetPosition;
     }
 
     private System.Collections.IEnumerator PlayProtection()
