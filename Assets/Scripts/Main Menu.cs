@@ -17,6 +17,7 @@ public class MainMenu : MonoBehaviour
     [SerializeField] private GameObject creditsPanel;
     [SerializeField] private GameObject winPanel;
     [SerializeField] private GameObject losePanel;
+    [SerializeField] private GameObject EmptyPanel;
 
 
 
@@ -70,7 +71,7 @@ public class MainMenu : MonoBehaviour
         if (instructionsPanel) instructionsPanel.SetActive(false);
         if (winPanel) winPanel.SetActive(false);
         if (losePanel) losePanel.SetActive(false);
-
+        if (EmptyPanel) EmptyPanel.SetActive(false);
         isGameStarted = false;
         isGameOver = false;
         Time.timeScale = 0f;
@@ -80,10 +81,12 @@ public class MainMenu : MonoBehaviour
     {
         pausedForSettings = pausePanel != null && pausePanel.activeSelf;
 
-        if (mainMenuPanel) mainMenuPanel.SetActive(false);
+        if (mainMenuPanel) mainMenuPanel.SetActive(true);
         if (pausePanel) pausePanel.SetActive(false);
 
         if (settingsPanel) settingsPanel.SetActive(true);
+        if (EmptyPanel) EmptyPanel.SetActive(true);
+
 
         if (musicSlider) musicSlider.SetValueWithoutNotify(AudioManager.MusicVolume);
         if (sfxSlider) sfxSlider.SetValueWithoutNotify(AudioManager.SFXVolume);
@@ -91,6 +94,8 @@ public class MainMenu : MonoBehaviour
     public void CloseSettings()
     {
         if (settingsPanel) settingsPanel.SetActive(false);
+        if (EmptyPanel) EmptyPanel.SetActive(false);
+
         if (pausedForSettings)
         {
             if (pausePanel) pausePanel.SetActive(true);
@@ -103,22 +108,36 @@ public class MainMenu : MonoBehaviour
     //3- Instructions Panel
     public void OpenInstructions()
     {
-        if (mainMenuPanel) mainMenuPanel.SetActive(false);
+        if (mainMenuPanel) mainMenuPanel.SetActive(true);
         if (instructionsPanel) instructionsPanel.SetActive(true);
+        if (EmptyPanel) EmptyPanel.SetActive(true);
 
+    }
+    public void CloseInstructions()
+    {
+        if (instructionsPanel) instructionsPanel.SetActive(false);
+        if (EmptyPanel) EmptyPanel.SetActive(false);
+        if (mainMenuPanel) mainMenuPanel.SetActive(true);
     }
     //4- Credits Panel
     public void OpenCredits()
     {
-        if (mainMenuPanel) mainMenuPanel.SetActive(false);
+        if (mainMenuPanel) mainMenuPanel.SetActive(true);
         if (creditsPanel) creditsPanel.SetActive(true);
+        if (EmptyPanel) EmptyPanel.SetActive(true);
+    }
+    public void CloseCredits()
+    {
+        if (creditsPanel) creditsPanel.SetActive(false);
+        if (mainMenuPanel) mainMenuPanel.SetActive(true);
+        if (EmptyPanel) EmptyPanel.SetActive(false);
     }
     public void BackToMainMenu()
     {
         if (creditsPanel) creditsPanel.SetActive(false);
         if (instructionsPanel) instructionsPanel.SetActive(false);
         if (settingsPanel) settingsPanel.SetActive(false);
-
+        if (EmptyPanel) EmptyPanel.SetActive(false);
         if (mainMenuPanel) mainMenuPanel.SetActive(true);
     }
     //5- pause panel
@@ -126,11 +145,13 @@ public class MainMenu : MonoBehaviour
     {
         if (!isGameStarted || isGameOver) return;
         if (pausePanel) pausePanel.SetActive(true);
+        if (EmptyPanel) EmptyPanel.SetActive(true);
         Time.timeScale = 0f;
     }
     public void ClosePausePanel()
     {
         if (pausePanel) pausePanel.SetActive(false);
+        if (EmptyPanel) EmptyPanel.SetActive(false);
         Time.timeScale = 1f;
     }
 
