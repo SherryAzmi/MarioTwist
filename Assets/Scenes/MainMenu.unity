@@ -972,7 +972,7 @@ MonoBehaviour:
   creditsPanel: {fileID: 1032052674}
   winPanel: {fileID: 0}
   losePanel: {fileID: 0}
-  EmptyPanel: {fileID: 0}
+  EmptyPanel: {fileID: 1373430376}
   musicSlider: {fileID: 1966632959}
   sfxSlider: {fileID: 0}
   screenFader: {fileID: 670527286}
