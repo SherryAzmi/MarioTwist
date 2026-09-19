@@ -8,7 +8,7 @@ public class PlayerRespawn : MonoBehaviour
     [SerializeField] private AudioSource audioSource;
     [SerializeField] private AudioClip checkpointClip;
     [SerializeField] private GameObject protectionVfxPrefab;
-    [SerializeField] private float protectionVfxScale = 0.1f;
+    [SerializeField] private float protectionVfxScale = 0.5f;
     [SerializeField] private float protectionDuration = 1.5f;
     [SerializeField] private float protectionFadeOutDuration = 0.5f;
 
