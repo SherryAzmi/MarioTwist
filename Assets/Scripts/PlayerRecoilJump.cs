@@ -11,9 +11,11 @@ public class PlayerRecoilJump : MonoBehaviour
     [SerializeField] private float fastJumpForce = 25f;
     [SerializeField] private Sprite slowGunSprite;
     [SerializeField] private Sprite fastGunSprite;
-    [SerializeField] private ParticleSystem gunParticles;
-    [SerializeField] private Color slowGunParticleColor = Color.red;
-    [SerializeField] private Color fastGunParticleColor = Color.blue;
+    [SerializeField] private GameObject muzzleEffectPrefab;
+    [SerializeField] private Color slowGunParticleColor = new Color(1f, 0.5f, 0f);
+    [SerializeField] private Color fastGunParticleColor = new Color(1f, 0.9f, 0.1f);
+    [SerializeField] private Vector2 slowGunMuzzleOffset = new Vector2(-3.36f, 0.19f);
+    [SerializeField] private Vector2 fastGunMuzzleOffset = new Vector2(-3.12f, 0.37f);
     [SerializeField] private float slowGunSpeedMultiplier = 0.5f;
     [SerializeField] private float slowGunGravityMultiplier = 0.4f;
     [SerializeField] private float redFireRate = 0.2f;
@@ -48,7 +50,6 @@ public class PlayerRecoilJump : MonoBehaviour
     {
         if (rb == null) rb = GetComponent<Rigidbody2D>();
         if (weaponAim == null) weaponAim = GetComponentInChildren<WeaponAim>();
-        if (gunParticles == null && weaponAim != null) gunParticles = weaponAim.GetComponentInChildren<ParticleSystem>();
         if (playerHealth == null) playerHealth = GetComponent<PlayerHealth>();
         if (audioSource == null) audioSource = GetComponent<AudioSource>();
         defaultGravityScale = rb.gravityScale;
@@ -83,7 +84,7 @@ public class PlayerRecoilJump : MonoBehaviour
         {
             lastRedFireTime = Time.time;
             float slowGravity = defaultGravityScale * slowGunGravityMultiplier;
-            PerformJump(jumpForce * slowGunSpeedMultiplier, slowGunSprite, slowGunParticleColor, jumpDirection, jumpClip, slowGravity);
+            PerformJump(jumpForce * slowGunSpeedMultiplier, slowGunSprite, slowGunParticleColor, slowGunMuzzleOffset, jumpDirection, jumpClip, slowGravity);
         }
         else if (rightClicked)
         {
@@ -95,7 +96,7 @@ public class PlayerRecoilJump : MonoBehaviour
 
             blueGunAmmo--;
             BlueAmmoChanged?.Invoke(blueGunAmmo, blueGunMaxAmmo);
-            PerformJump(fastJumpForce, fastGunSprite, fastGunParticleColor, jumpDirection, fastJumpClip, defaultGravityScale);
+            PerformJump(fastJumpForce, fastGunSprite, fastGunParticleColor, fastGunMuzzleOffset, jumpDirection, fastJumpClip, defaultGravityScale);
 
             if (blueGunAmmo <= 0)
             {
@@ -105,22 +106,49 @@ public class PlayerRecoilJump : MonoBehaviour
         }
     }
 
-    private void PerformJump(float force, Sprite gunSprite, Color particleColor, Vector2 jumpDirection, AudioClip clip, float gravityScale)
+    private void PerformJump(float force, Sprite gunSprite, Color particleColor, Vector2 muzzleOffset, Vector2 jumpDirection, AudioClip clip, float gravityScale)
     {
         if (audioSource != null && clip != null) audioSource.PlayOneShot(clip, AudioManager.SFXVolume);
         if (weaponAim.SpriteRenderer != null && gunSprite != null) weaponAim.SpriteRenderer.sprite = gunSprite;
 
-        if (gunParticles != null)
-        {
-            var main = gunParticles.main;
-            main.startColor = particleColor;
-            gunParticles.Play();
-        }
+        SpawnMuzzleEffect(particleColor, muzzleOffset, jumpDirection);
 
         rb.linearVelocity = jumpDirection * force;
         rb.gravityScale = gravityScale;
 
         isGrounded = false;
+    }
+
+    // The gun sprites point their barrel away from the cursor, so the effect fires along jumpDirection.
+    // muzzleOffset is measured in the weapon's local space with the sprite unflipped.
+    private void SpawnMuzzleEffect(Color color, Vector2 muzzleOffset, Vector2 barrelDirection)
+    {
+        if (muzzleEffectPrefab == null) return;
+
+        SpriteRenderer gunRenderer = weaponAim.SpriteRenderer;
+        if (gunRenderer != null && gunRenderer.flipX) muzzleOffset.y = -muzzleOffset.y;
+
+        Vector3 position = weaponAim.transform.TransformPoint(muzzleOffset);
+        Quaternion rotation = Quaternion.LookRotation(barrelDirection, Vector3.back);
+        GameObject effect = Instantiate(muzzleEffectPrefab, position, rotation);
+
+        // The impact prefab includes a wall bullet-hole decal, which makes no sense floating at the barrel.
+        foreach (MeshRenderer decal in effect.GetComponentsInChildren<MeshRenderer>()) Destroy(decal.gameObject);
+
+        foreach (ParticleSystem particles in effect.GetComponentsInChildren<ParticleSystem>())
+        {
+            var main = particles.main;
+            Color tint = color;
+            tint.a = main.startColor.color.a;
+            main.startColor = tint;
+        }
+
+        if (gunRenderer == null) return;
+        foreach (ParticleSystemRenderer particleRenderer in effect.GetComponentsInChildren<ParticleSystemRenderer>())
+        {
+            particleRenderer.sortingLayerID = gunRenderer.sortingLayerID;
+            particleRenderer.sortingOrder = gunRenderer.sortingOrder + 1;
+        }
     }
 
     private void OnCollisionEnter2D(Collision2D collision)
