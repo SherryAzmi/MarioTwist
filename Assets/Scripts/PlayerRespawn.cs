@@ -67,6 +67,21 @@ public class PlayerRespawn : MonoBehaviour
         return targetPosition;
     }
 
+    // The VFX prefab is centered on its own origin, so instantiating it at
+    // transform.position (the player's sprite-center pivot) puts it around the
+    // stomach instead of rising up from the ground. Use the collider's bottom
+    // edge instead so the effect starts at the feet and builds upward.
+    private Vector3 FeetPosition()
+    {
+        if (boxCollider == null) return transform.position;
+
+        float halfHeight = boxCollider.size.y * transform.localScale.y / 2f;
+        float colliderOffsetY = boxCollider.offset.y * transform.localScale.y;
+        Vector3 feet = transform.position;
+        feet.y = transform.position.y + colliderOffsetY - halfHeight;
+        return feet;
+    }
+
     private System.Collections.IEnumerator PlayProtection()
     {
         if (playerHealth != null) playerHealth.SetInvulnerable(true);
@@ -83,7 +98,7 @@ public class PlayerRespawn : MonoBehaviour
         GameObject vfxInstance = null;
         if (protectionVfxPrefab != null)
         {
-            vfxInstance = Instantiate(protectionVfxPrefab, transform.position, Quaternion.identity);
+            vfxInstance = Instantiate(protectionVfxPrefab, FeetPosition(), Quaternion.identity);
             vfxInstance.transform.localScale = Vector3.one * protectionVfxScale;
         }
 
