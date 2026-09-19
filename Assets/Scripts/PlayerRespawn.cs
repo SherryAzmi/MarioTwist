@@ -8,7 +8,9 @@ public class PlayerRespawn : MonoBehaviour
     [SerializeField] private AudioSource audioSource;
     [SerializeField] private AudioClip checkpointClip;
     [SerializeField] private GameObject protectionVfxPrefab;
+    [SerializeField] private float protectionVfxScale = 0.1f;
     [SerializeField] private float protectionDuration = 1.5f;
+    [SerializeField] private float protectionFadeOutDuration = 0.5f;
 
     private Vector3 checkpointPosition;
     private Coroutine protectionRoutine;
@@ -55,24 +57,37 @@ public class PlayerRespawn : MonoBehaviour
         if (protectionVfxPrefab != null)
         {
             vfxInstance = Instantiate(protectionVfxPrefab, transform.position, Quaternion.identity);
+            vfxInstance.transform.localScale = Vector3.one * protectionVfxScale;
         }
 
         yield return new WaitForSeconds(protectionDuration);
 
+        // Unlock movement/damage and start the VFX's shrink-out in the same instant,
+        // so the fade is the visible cue that protection just ended -- the particle
+        // system's own lifetime is too slow/subtle on its own to read as "fading".
         if (rb != null) rb.bodyType = originalBodyType;
         if (recoilJump != null) recoilJump.enabled = true;
         if (playerHealth != null) playerHealth.SetInvulnerable(false);
 
-        if (vfxInstance != null)
-        {
-            // Stop spawning new particles now (matches the gameplay-facing protection
-            // window), but let already-alive particles fade out naturally afterward
-            // instead of vanishing instantly -- the player is free to move by then.
-            var rootParticles = vfxInstance.GetComponent<ParticleSystem>();
-            if (rootParticles != null) rootParticles.Stop(true, ParticleSystemStopBehavior.StopEmitting);
-            Destroy(vfxInstance, 5f);
-        }
+        if (vfxInstance != null) StartCoroutine(FadeOutVfx(vfxInstance));
 
         protectionRoutine = null;
+    }
+
+    private System.Collections.IEnumerator FadeOutVfx(GameObject vfxInstance)
+    {
+        var rootParticles = vfxInstance.GetComponent<ParticleSystem>();
+        if (rootParticles != null) rootParticles.Stop(true, ParticleSystemStopBehavior.StopEmitting);
+
+        Vector3 startScale = vfxInstance.transform.localScale;
+        float elapsed = 0f;
+        while (elapsed < protectionFadeOutDuration)
+        {
+            elapsed += Time.deltaTime;
+            vfxInstance.transform.localScale = Vector3.Lerp(startScale, Vector3.zero, elapsed / protectionFadeOutDuration);
+            yield return null;
+        }
+
+        Destroy(vfxInstance);
     }
 }
