@@ -21,7 +21,7 @@ public class PlayerRecoilJump : MonoBehaviour
     [SerializeField] private float slowGunGravityMultiplier = 0.4f;
     [SerializeField] private float redFireRate = 0.2f;
     [SerializeField] private int blueGunMaxAmmo = 2;
-    [SerializeField] private float blueGunReloadTime = 1f;
+    [SerializeField] private float blueGunReloadInterval = 1f; // seconds to get one blue-gun bullet back
     [SerializeField] private AudioSource audioSource;
     [SerializeField] private AudioClip jumpClip;
     [SerializeField] private AudioClip fastJumpClip;
@@ -34,13 +34,12 @@ public class PlayerRecoilJump : MonoBehaviour
     private bool isGrounded;
     private float lastRedFireTime = -999f;
     private int blueGunAmmo;
-    private bool isBlueGunReloading;
-    private float reloadTimer;
+    private float blueGunRechargeTimer;
 
     public bool IsGrounded => isGrounded;
     public int BlueGunAmmo => blueGunAmmo;
     public int BlueGunMaxAmmo => blueGunMaxAmmo;
-    public bool IsBlueGunReloading => isBlueGunReloading;
+    public bool IsBlueGunReloading => blueGunAmmo < blueGunMaxAmmo;
 
     public event System.Action<int, int> BlueAmmoChanged;
 
@@ -62,17 +61,7 @@ public class PlayerRecoilJump : MonoBehaviour
 
     private void Update()
     {
-        if (isBlueGunReloading)
-        {
-            reloadTimer -= Time.deltaTime;
-            if (reloadTimer <= 0f)
-            {
-                isBlueGunReloading = false;
-                blueGunAmmo = blueGunMaxAmmo;
-                BlueAmmoChanged?.Invoke(blueGunAmmo, blueGunMaxAmmo);
-                if (audioSource != null && blueGunReloadCompleteClip != null) audioSource.PlayOneShot(blueGunReloadCompleteClip, AudioManager.SFXVolume);
-            }
-        }
+        RechargeBlueGun();
 
         if (Mouse.current == null || weaponAim == null) return;
 
@@ -92,21 +81,42 @@ public class PlayerRecoilJump : MonoBehaviour
         }
         else if (rightClicked)
         {
-            if (isBlueGunReloading || blueGunAmmo <= 0)
-            {
-                if (audioSource != null && blueGunEmptyClip != null) audioSource.PlayOneShot(blueGunEmptyClip, AudioManager.SFXVolume);
-                return;
-            }
+            FireBlueGun(jumpDirection);
+        }
+    }
 
-            blueGunAmmo--;
+    // The blue gun can fire whenever it has at least one bullet, even while it is still recharging.
+    private void FireBlueGun(Vector2 jumpDirection)
+    {
+        if (blueGunAmmo <= 0)
+        {
+            if (audioSource != null && blueGunEmptyClip != null) audioSource.PlayOneShot(blueGunEmptyClip, AudioManager.SFXVolume);
+            return;
+        }
+
+        blueGunAmmo--;
+        BlueAmmoChanged?.Invoke(blueGunAmmo, blueGunMaxAmmo);
+        PerformJump(fastJumpForce, fastGunSprite, fastGunParticleColor, fastGunMuzzleOffset, jumpDirection, fastJumpClip, defaultGravityScale);
+    }
+
+    // Gives one bullet back every blueGunReloadInterval seconds while the gun isn't full,
+    // so the gun can be fired again as soon as it has a single bullet (0 -> 1 -> 2 -> 3).
+    private void RechargeBlueGun()
+    {
+        if (blueGunAmmo >= blueGunMaxAmmo)
+        {
+            blueGunRechargeTimer = 0f;
+            return;
+        }
+
+        float interval = Mathf.Max(0.05f, blueGunReloadInterval);
+        blueGunRechargeTimer += Time.deltaTime;
+        while (blueGunRechargeTimer >= interval && blueGunAmmo < blueGunMaxAmmo)
+        {
+            blueGunRechargeTimer -= interval;
+            blueGunAmmo++;
             BlueAmmoChanged?.Invoke(blueGunAmmo, blueGunMaxAmmo);
-            PerformJump(fastJumpForce, fastGunSprite, fastGunParticleColor, fastGunMuzzleOffset, jumpDirection, fastJumpClip, defaultGravityScale);
-
-            if (blueGunAmmo <= 0)
-            {
-                isBlueGunReloading = true;
-                reloadTimer = blueGunReloadTime;
-            }
+            if (audioSource != null && blueGunReloadCompleteClip != null) audioSource.PlayOneShot(blueGunReloadCompleteClip, AudioManager.SFXVolume);
         }
     }
 

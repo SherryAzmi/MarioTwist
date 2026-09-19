@@ -1,19 +1,13 @@
 fileFormatVersion: 2
-guid: 6463507440727174c949e79574401ce8
+guid: 590c91fea048d754b9e1265e886c8e6e
 TextureImporter:
   internalIDToNameTable:
   - first:
-      213: 1908063562665320030
-    second: up spike_0
+      213: 1961146400497213573
+    second: SewersFloor_0
   - first:
-      213: -7491454170706108279
-    second: up spike_1
-  - first:
-      213: 2652031246588061087
-    second: up spike_2
-  - first:
-      213: 5447751589257119869
-    second: SpikeCeiling
+      213: -680177371182837944
+    second: SewersFloor_1
   externalObjects: {}
   serializedVersion: 13
   mipmaps:
@@ -60,7 +54,7 @@ TextureImporter:
   spriteMeshType: 1
   alignment: 0
   spritePivot: {x: 0.5, y: 0.5}
-  spritePixelsToUnits: 655
+  spritePixelsToUnits: 100
   spriteBorder: {x: 0, y: 0, z: 0, w: 0}
   spriteGenerateFallbackPhysicsShape: 1
   alphaUsage: 1
@@ -122,27 +116,45 @@ TextureImporter:
     serializedVersion: 2
     sprites:
     - serializedVersion: 2
-      name: SpikeCeiling
+      name: SewersFloor_0
       rect:
         serializedVersion: 2
-        x: 510
-        y: 308
-        width: 655
-        height: 414
-      alignment: 9
-      pivot: {x: 0.5, y: 0.2089372}
+        x: 439
+        y: 573
+        width: 1107
+        height: 260
+      alignment: 0
+      pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
       customData: 
       outline: []
-      physicsShape:
-      - - {x: -327.5, y: -207}
-        - {x: 327.5, y: -207}
-        - {x: 327.5, y: 207}
-        - {x: -327.5, y: 207}
+      physicsShape: []
       tessellationDetail: -1
       bones: []
-      spriteID: d788d3ef43d4a9b40800000000000000
-      internalID: 5447751589257119869
+      spriteID: 5802c2ab244673b10800000000000000
+      internalID: 1961146400497213573
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: SewersFloor_1
+      rect:
+        serializedVersion: 2
+        x: 440
+        y: 278
+        width: 1106
+        height: 190
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 84f436ed8468f86f0800000000000000
+      internalID: -680177371182837944
       vertices: []
       indices: 
       edges: []
@@ -151,7 +163,7 @@ TextureImporter:
     customData: 
     physicsShape: []
     bones: []
-    spriteID: 97524e62ef492b643bff9ef662a7d145
+    spriteID: 
     internalID: 0
     vertices: []
     indices: 
@@ -161,10 +173,8 @@ TextureImporter:
     spriteCustomMetadata:
       entries: []
     nameFileIdTable:
-      SpikeCeiling: 5447751589257119869
-      up spike_0: 1908063562665320030
-      up spike_1: -7491454170706108279
-      up spike_2: 2652031246588061087
+      SewersFloor_0: 1961146400497213573
+      SewersFloor_1: -680177371182837944
   mipmapLimitGroupName: 
   pSDRemoveMatte: 0
   userData: 

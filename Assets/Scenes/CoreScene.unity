@@ -35465,7 +35465,7 @@ MonoBehaviour:
   slowGunGravityMultiplier: 0.5
   redFireRate: 0.2
   blueGunMaxAmmo: 3
-  blueGunReloadTime: 2
+  blueGunReloadInterval: 1
   audioSource: {fileID: 867041667}
   jumpClip: {fileID: 8300000, guid: 134f22b0c2f43664981ce9bd29745b53, type: 3}
   fastJumpClip: {fileID: 8300000, guid: 732df115fc55a0b4e8ceec6eb4d82dea, type: 3}
