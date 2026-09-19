@@ -15,8 +15,8 @@ public class PlayerRecoilJump : MonoBehaviour
     [SerializeField] private GameObject muzzleEffectPrefab;
     [SerializeField] private Color slowGunParticleColor = new Color(1f, 0.5f, 0f);
     [SerializeField] private Color fastGunParticleColor = new Color(1f, 0.9f, 0.1f);
-    [SerializeField] private Vector2 slowGunMuzzleOffset = new Vector2(-3.36f, 0.19f);
-    [SerializeField] private Vector2 fastGunMuzzleOffset = new Vector2(-3.12f, 0.37f);
+    [SerializeField] private Vector2 slowGunMuzzleOffset = new Vector2(3.36f, -0.19f);
+    [SerializeField] private Vector2 fastGunMuzzleOffset = new Vector2(3.12f, -0.37f);
     [SerializeField] private float slowGunSpeedMultiplier = 0.5f;
     [SerializeField] private float slowGunGravityMultiplier = 0.4f;
     [SerializeField] private float redFireRate = 0.2f;
@@ -63,7 +63,8 @@ public class PlayerRecoilJump : MonoBehaviour
     {
         RechargeBlueGun();
 
-        if (Mouse.current == null || weaponAim == null) return;
+        // Clicks on pause/win/lose panel buttons must not fire the gun (the game is frozen, time is 0).
+        if (Mouse.current == null || weaponAim == null || Time.timeScale == 0f) return;
 
         bool leftHeld = Mouse.current.leftButton.isPressed;
         bool rightClicked = Mouse.current.rightButton.wasPressedThisFrame;
@@ -125,7 +126,7 @@ public class PlayerRecoilJump : MonoBehaviour
         if (audioSource != null && clip != null) audioSource.PlayOneShot(clip, AudioManager.SFXVolume);
         if (weaponAim.SpriteRenderer != null && gunSprite != null) weaponAim.SpriteRenderer.sprite = gunSprite;
 
-        SpawnMuzzleEffect(particleColor, muzzleOffset, jumpDirection);
+        SpawnMuzzleEffect(particleColor, muzzleOffset, -jumpDirection);
         if (animator != null) animator.SetTrigger(JumpTrigger);
 
         rb.linearVelocity = jumpDirection * force;
@@ -134,8 +135,9 @@ public class PlayerRecoilJump : MonoBehaviour
         isGrounded = false;
     }
 
-    // The gun sprites point their barrel away from the cursor, so the effect fires along jumpDirection.
-    // muzzleOffset is measured in the weapon's local space with the sprite unflipped.
+    // The gun points at the cursor and the shot pushes the player the opposite way (recoil), so the effect
+    // fires along barrelDirection = the cursor direction. muzzleOffset is measured in the weapon's local
+    // space with the sprite unflipped.
     private void SpawnMuzzleEffect(Color color, Vector2 muzzleOffset, Vector2 barrelDirection)
     {
         if (muzzleEffectPrefab == null) return;

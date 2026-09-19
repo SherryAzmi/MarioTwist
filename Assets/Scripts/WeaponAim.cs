@@ -34,12 +34,15 @@ public class WeaponAim : MonoBehaviour
 
         if (spriteRenderer != null)
         {
-            spriteRenderer.flipX = facingLeft;
+            // The gun art is drawn barrel-up with the grip on its left. It sits on the cursor side, rotated so the
+            // barrel points at the cursor, so it must be mirrored when aiming right to keep the grip below the barrel.
+            spriteRenderer.flipX = !facingLeft;
         }
 
         if (playerSpriteRenderer != null)
         {
-            playerSpriteRenderer.flipX = facingLeft;
+            // The player art (idle and jump) is drawn facing left, so mirror it when aiming right to face the gun.
+            playerSpriteRenderer.flipX = !facingLeft;
         }
     }
 }
