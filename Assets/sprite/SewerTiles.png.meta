@@ -1,0 +1,1018 @@
+fileFormatVersion: 2
+guid: eb1bc3b3438fd79468c79f702e8332f8
+TextureImporter:
+  internalIDToNameTable:
+  - first:
+      213: 9024685622514987245
+    second: SewerTiles_0
+  - first:
+      213: -8102486918741949983
+    second: SewerFloor_v0_p0
+  - first:
+      213: 5963604746651988055
+    second: SewerFloor_v0_p1
+  - first:
+      213: 4169731072098692833
+    second: SewerFloor_v0_p2
+  - first:
+      213: -9155302136944897783
+    second: SewerFloor_v1_p0
+  - first:
+      213: -5056457703346842187
+    second: SewerFloor_v1_p1
+  - first:
+      213: 691688126524740172
+    second: SewerFloor_v1_p2
+  - first:
+      213: 7655845008398113689
+    second: SewerFloor_v2_p0
+  - first:
+      213: 2711898112644036651
+    second: SewerFloor_v2_p1
+  - first:
+      213: -1073836964628111771
+    second: SewerFloor_v2_p2
+  - first:
+      213: -4713411008577661205
+    second: SewerCeil_v0_p0
+  - first:
+      213: -5786719136547712393
+    second: SewerCeil_v0_p1
+  - first:
+      213: -8117663464327170289
+    second: SewerCeil_v0_p2
+  - first:
+      213: -6309175913190015289
+    second: SewerCeil_v1_p0
+  - first:
+      213: -4193654175432828686
+    second: SewerCeil_v1_p1
+  - first:
+      213: 1192534298550704513
+    second: SewerCeil_v1_p2
+  - first:
+      213: -3205920009976149
+    second: SewerWallR_v0_p0
+  - first:
+      213: -5416402436069708878
+    second: SewerWallR_v0_p1
+  - first:
+      213: -3458721694645372851
+    second: SewerWallR_v0_p2
+  - first:
+      213: -5160306852890138533
+    second: SewerWallR_v1_p0
+  - first:
+      213: 8782060306565647520
+    second: SewerWallR_v1_p1
+  - first:
+      213: 5768666661285855561
+    second: SewerWallR_v1_p2
+  - first:
+      213: 3467359189137183271
+    second: SewerWallR_v2_p0
+  - first:
+      213: 332394275617143972
+    second: SewerWallR_v2_p1
+  - first:
+      213: 6872995533892065727
+    second: SewerWallR_v2_p2
+  - first:
+      213: 7419859893713118661
+    second: SewerWallL_v0_p0
+  - first:
+      213: 4491719117139510846
+    second: SewerWallL_v0_p1
+  - first:
+      213: 211070909158842496
+    second: SewerWallL_v0_p2
+  - first:
+      213: 4492060136378814522
+    second: SewerWallL_v1_p0
+  - first:
+      213: 4039073876410242102
+    second: SewerWallL_v1_p1
+  - first:
+      213: 1493812148641533457
+    second: SewerWallL_v1_p2
+  - first:
+      213: 415641777675696821
+    second: SewerWallL_v2_p0
+  - first:
+      213: -7057431630157861168
+    second: SewerWallL_v2_p1
+  - first:
+      213: -7372161601991472803
+    second: SewerWallL_v2_p2
+  - first:
+      213: 4357407067419497533
+    second: SewerFill
+  externalObjects: {}
+  serializedVersion: 13
+  mipmaps:
+    mipMapMode: 0
+    enableMipMap: 1
+    sRGBTexture: 1
+    linearTexture: 0
+    fadeOut: 0
+    borderMipMap: 0
+    mipMapsPreserveCoverage: 0
+    alphaTestReferenceValue: 0.5
+    mipMapFadeDistanceStart: 1
+    mipMapFadeDistanceEnd: 3
+  bumpmap:
+    convertToNormalMap: 0
+    externalNormalMap: 0
+    heightScale: 0.25
+    normalMapFilter: 0
+    flipGreenChannel: 0
+  isReadable: 0
+  streamingMipmaps: 0
+  streamingMipmapsPriority: 0
+  vTOnly: 0
+  ignoreMipmapLimit: 0
+  grayScaleToAlpha: 0
+  generateCubemap: 6
+  cubemapConvolution: 0
+  seamlessCubemap: 0
+  textureFormat: 1
+  maxTextureSize: 2048
+  textureSettings:
+    serializedVersion: 2
+    filterMode: 1
+    aniso: 1
+    mipBias: 0
+    wrapU: 1
+    wrapV: 1
+    wrapW: 1
+  nPOTScale: 0
+  lightmap: 0
+  compressionQuality: 50
+  spriteMode: 2
+  spriteExtrude: 1
+  spriteMeshType: 1
+  alignment: 0
+  spritePivot: {x: 0.5, y: 0.5}
+  spritePixelsToUnits: 256
+  spriteBorder: {x: 0, y: 0, z: 0, w: 0}
+  spriteGenerateFallbackPhysicsShape: 1
+  alphaUsage: 1
+  alphaIsTransparency: 1
+  spriteTessellationDetail: -1
+  textureType: 8
+  textureShape: 1
+  singleChannelComponent: 0
+  flipbookRows: 1
+  flipbookColumns: 1
+  maxTextureSizeSet: 0
+  compressionQualitySet: 0
+  textureFormatSet: 0
+  ignorePngGamma: 0
+  applyGammaDecoding: 0
+  swizzle: 50462976
+  cookieLightType: 0
+  platformSettings:
+  - serializedVersion: 4
+    buildTarget: DefaultTexturePlatform
+    maxTextureSize: 4096
+    resizeAlgorithm: 0
+    textureFormat: -1
+    textureCompression: 0
+    compressionQuality: 50
+    crunchedCompression: 0
+    allowsAlphaSplitting: 0
+    overridden: 0
+    ignorePlatformSupport: 0
+    androidETC2FallbackOverride: 0
+    forceMaximumCompressionQuality_BC6H_BC7: 0
+  - serializedVersion: 4
+    buildTarget: Standalone
+    maxTextureSize: 2048
+    resizeAlgorithm: 0
+    textureFormat: -1
+    textureCompression: 1
+    compressionQuality: 50
+    crunchedCompression: 0
+    allowsAlphaSplitting: 0
+    overridden: 0
+    ignorePlatformSupport: 0
+    androidETC2FallbackOverride: 0
+    forceMaximumCompressionQuality_BC6H_BC7: 0
+  - serializedVersion: 4
+    buildTarget: Android
+    maxTextureSize: 2048
+    resizeAlgorithm: 0
+    textureFormat: -1
+    textureCompression: 1
+    compressionQuality: 50
+    crunchedCompression: 0
+    allowsAlphaSplitting: 0
+    overridden: 0
+    ignorePlatformSupport: 0
+    androidETC2FallbackOverride: 0
+    forceMaximumCompressionQuality_BC6H_BC7: 0
+  spriteSheet:
+    serializedVersion: 2
+    sprites:
+    - serializedVersion: 2
+      name: SewerFloor_v0_p0
+      rect:
+        serializedVersion: 2
+        x: 4
+        y: 4
+        width: 256
+        height: 256
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 1e10323831f2e8f80800000000000000
+      internalID: -8102486918741949983
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: SewerFloor_v0_p1
+      rect:
+        serializedVersion: 2
+        x: 268
+        y: 4
+        width: 256
+        height: 256
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 7507609abeaf2c250800000000000000
+      internalID: 5963604746651988055
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: SewerFloor_v0_p2
+      rect:
+        serializedVersion: 2
+        x: 532
+        y: 4
+        width: 256
+        height: 256
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 1eee951615cddd930800000000000000
+      internalID: 4169731072098692833
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: SewerFloor_v1_p0
+      rect:
+        serializedVersion: 2
+        x: 796
+        y: 4
+        width: 256
+        height: 256
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 901560c9635d1f080800000000000000
+      internalID: -9155302136944897783
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: SewerFloor_v1_p1
+      rect:
+        serializedVersion: 2
+        x: 1060
+        y: 4
+        width: 256
+        height: 256
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 5b55932528ad3d9b0800000000000000
+      internalID: -5056457703346842187
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: SewerFloor_v1_p2
+      rect:
+        serializedVersion: 2
+        x: 1324
+        y: 4
+        width: 256
+        height: 256
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: c42dcd4bfae599900800000000000000
+      internalID: 691688126524740172
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: SewerFloor_v2_p0
+      rect:
+        serializedVersion: 2
+        x: 1588
+        y: 4
+        width: 256
+        height: 256
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 99b540509760f3a60800000000000000
+      internalID: 7655845008398113689
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: SewerFloor_v2_p1
+      rect:
+        serializedVersion: 2
+        x: 1852
+        y: 4
+        width: 256
+        height: 256
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: b28333717f892a520800000000000000
+      internalID: 2711898112644036651
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: SewerFloor_v2_p2
+      rect:
+        serializedVersion: 2
+        x: 2116
+        y: 4
+        width: 256
+        height: 256
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 56e58a858f6f811f0800000000000000
+      internalID: -1073836964628111771
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: SewerCeil_v0_p0
+      rect:
+        serializedVersion: 2
+        x: 4
+        y: 268
+        width: 256
+        height: 256
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: be6105119a9969eb0800000000000000
+      internalID: -4713411008577661205
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: SewerCeil_v0_p1
+      rect:
+        serializedVersion: 2
+        x: 268
+        y: 268
+        width: 256
+        height: 256
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 7725e1bca9171bfa0800000000000000
+      internalID: -5786719136547712393
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: SewerCeil_v0_p2
+      rect:
+        serializedVersion: 2
+        x: 532
+        y: 268
+        width: 256
+        height: 256
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: f07bc92a614485f80800000000000000
+      internalID: -8117663464327170289
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: SewerCeil_v1_p0
+      rect:
+        serializedVersion: 2
+        x: 796
+        y: 268
+        width: 256
+        height: 256
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 7cebbd43fed4178a0800000000000000
+      internalID: -6309175913190015289
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: SewerCeil_v1_p1
+      rect:
+        serializedVersion: 2
+        x: 1060
+        y: 268
+        width: 256
+        height: 256
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 2f81e721fb52dc5c0800000000000000
+      internalID: -4193654175432828686
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: SewerCeil_v1_p2
+      rect:
+        serializedVersion: 2
+        x: 1324
+        y: 268
+        width: 256
+        height: 256
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 189959f40abbc8010800000000000000
+      internalID: 1192534298550704513
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: SewerWallR_v0_p0
+      rect:
+        serializedVersion: 2
+        x: 1588
+        y: 268
+        width: 256
+        height: 256
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: ba680a49b3c94fff0800000000000000
+      internalID: -3205920009976149
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: SewerWallR_v0_p1
+      rect:
+        serializedVersion: 2
+        x: 1852
+        y: 268
+        width: 256
+        height: 256
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 2bb21858ea215d4b0800000000000000
+      internalID: -5416402436069708878
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: SewerWallR_v0_p2
+      rect:
+        serializedVersion: 2
+        x: 2116
+        y: 268
+        width: 256
+        height: 256
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: d48b9bd91f62000d0800000000000000
+      internalID: -3458721694645372851
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: SewerWallR_v1_p0
+      rect:
+        serializedVersion: 2
+        x: 4
+        y: 532
+        width: 256
+        height: 256
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: b58287df148e268b0800000000000000
+      internalID: -5160306852890138533
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: SewerWallR_v1_p1
+      rect:
+        serializedVersion: 2
+        x: 268
+        y: 532
+        width: 256
+        height: 256
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 0ac47e8c15520e970800000000000000
+      internalID: 8782060306565647520
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: SewerWallR_v1_p2
+      rect:
+        serializedVersion: 2
+        x: 532
+        y: 532
+        width: 256
+        height: 256
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 9410595c3cb6e0050800000000000000
+      internalID: 5768666661285855561
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: SewerWallR_v2_p0
+      rect:
+        serializedVersion: 2
+        x: 796
+        y: 532
+        width: 256
+        height: 256
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 7225539cfc88e1030800000000000000
+      internalID: 3467359189137183271
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: SewerWallR_v2_p1
+      rect:
+        serializedVersion: 2
+        x: 1060
+        y: 532
+        width: 256
+        height: 256
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 4ac788325d6ec9400800000000000000
+      internalID: 332394275617143972
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: SewerWallR_v2_p2
+      rect:
+        serializedVersion: 2
+        x: 1324
+        y: 532
+        width: 256
+        height: 256
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: fb99b7cf509c16f50800000000000000
+      internalID: 6872995533892065727
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: SewerWallL_v0_p0
+      rect:
+        serializedVersion: 2
+        x: 1588
+        y: 532
+        width: 256
+        height: 256
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 5c520ffd243a8f660800000000000000
+      internalID: 7419859893713118661
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: SewerWallL_v0_p1
+      rect:
+        serializedVersion: 2
+        x: 1852
+        y: 532
+        width: 256
+        height: 256
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: e368ee72dbac55e30800000000000000
+      internalID: 4491719117139510846
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: SewerWallL_v0_p2
+      rect:
+        serializedVersion: 2
+        x: 2116
+        y: 532
+        width: 256
+        height: 256
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 080e4d2afdfdde200800000000000000
+      internalID: 211070909158842496
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: SewerWallL_v1_p0
+      rect:
+        serializedVersion: 2
+        x: 4
+        y: 796
+        width: 256
+        height: 256
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: a305d82e4e0075e30800000000000000
+      internalID: 4492060136378814522
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: SewerWallL_v1_p1
+      rect:
+        serializedVersion: 2
+        x: 268
+        y: 796
+        width: 256
+        height: 256
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 6341ef86a4cad0830800000000000000
+      internalID: 4039073876410242102
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: SewerWallL_v1_p2
+      rect:
+        serializedVersion: 2
+        x: 532
+        y: 796
+        width: 256
+        height: 256
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 11e01f01c361bb410800000000000000
+      internalID: 1493812148641533457
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: SewerWallL_v2_p0
+      rect:
+        serializedVersion: 2
+        x: 796
+        y: 796
+        width: 256
+        height: 256
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 5bafb20aef7a4c500800000000000000
+      internalID: 415641777675696821
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: SewerWallL_v2_p1
+      rect:
+        serializedVersion: 2
+        x: 1060
+        y: 796
+        width: 256
+        height: 256
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 0dea5d10357fe0e90800000000000000
+      internalID: -7057431630157861168
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: SewerWallL_v2_p2
+      rect:
+        serializedVersion: 2
+        x: 1324
+        y: 796
+        width: 256
+        height: 256
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: d5906861512d0b990800000000000000
+      internalID: -7372161601991472803
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: SewerFill
+      rect:
+        serializedVersion: 2
+        x: 1588
+        y: 796
+        width: 256
+        height: 256
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: d34d05b24ae987c30800000000000000
+      internalID: 4357407067419497533
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    outline: []
+    customData: 
+    physicsShape: []
+    bones: []
+    spriteID: 
+    internalID: 0
+    vertices: []
+    indices: 
+    edges: []
+    weights: []
+    secondaryTextures: []
+    spriteCustomMetadata:
+      entries: []
+    nameFileIdTable:
+      SewerCeil_v0_p0: -4713411008577661205
+      SewerCeil_v0_p1: -5786719136547712393
+      SewerCeil_v0_p2: -8117663464327170289
+      SewerCeil_v1_p0: -6309175913190015289
+      SewerCeil_v1_p1: -4193654175432828686
+      SewerCeil_v1_p2: 1192534298550704513
+      SewerFill: 4357407067419497533
+      SewerFloor_v0_p0: -8102486918741949983
+      SewerFloor_v0_p1: 5963604746651988055
+      SewerFloor_v0_p2: 4169731072098692833
+      SewerFloor_v1_p0: -9155302136944897783
+      SewerFloor_v1_p1: -5056457703346842187
+      SewerFloor_v1_p2: 691688126524740172
+      SewerFloor_v2_p0: 7655845008398113689
+      SewerFloor_v2_p1: 2711898112644036651
+      SewerFloor_v2_p2: -1073836964628111771
+      SewerTiles_0: 9024685622514987245
+      SewerWallL_v0_p0: 7419859893713118661
+      SewerWallL_v0_p1: 4491719117139510846
+      SewerWallL_v0_p2: 211070909158842496
+      SewerWallL_v1_p0: 4492060136378814522
+      SewerWallL_v1_p1: 4039073876410242102
+      SewerWallL_v1_p2: 1493812148641533457
+      SewerWallL_v2_p0: 415641777675696821
+      SewerWallL_v2_p1: -7057431630157861168
+      SewerWallL_v2_p2: -7372161601991472803
+      SewerWallR_v0_p0: -3205920009976149
+      SewerWallR_v0_p1: -5416402436069708878
+      SewerWallR_v0_p2: -3458721694645372851
+      SewerWallR_v1_p0: -5160306852890138533
+      SewerWallR_v1_p1: 8782060306565647520
+      SewerWallR_v1_p2: 5768666661285855561
+      SewerWallR_v2_p0: 3467359189137183271
+      SewerWallR_v2_p1: 332394275617143972
+      SewerWallR_v2_p2: 6872995533892065727
+  mipmapLimitGroupName: 
+  pSDRemoveMatte: 0
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 

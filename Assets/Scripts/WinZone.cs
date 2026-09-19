@@ -39,7 +39,7 @@ public class WinZone : MonoBehaviour
     }
 
     // Silences everything else (music, loops, effects) so only the victory clip is audible.
-    // MusicPlayer resumes on its own once the scene reloads.
+    // The scene's MusicPlayer starts its track again when the scene is reloaded.
     private void PlayVictoryOnly(PlayerRecoilJump recoilJump)
     {
         if (victoryClip == null) return;
